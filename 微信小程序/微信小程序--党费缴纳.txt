@@ -1,0 +1,18 @@
+AppID(小程序ID)：		 wxae23fab5c712b068
+AppSecret(小程序密钥)：	 86ab4bed69a4811f0ac2ca864f399533
+
+
+11248
+
+
+
+gitee: junezk:1loveu
+
+====================================
+
+AppID(小程序ID)：		 wx67e417e7a5775b90
+
+AppSecret(小程序密钥)：	 351aa594cbef0e160eda92e7e5b26146
+
+消息token：rzmyyaxfq3pstk7w33f87peawt5u7jkq
+EncodingAESKey：f0bt5Xt5K2IDRy9uIKgXqQF9GAJ7n1qDYjQNJOanUpA
