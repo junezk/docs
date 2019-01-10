@@ -97,7 +97,7 @@ participant 远程仓库
 ### Git 服务器端
 
 - Github - https://github.com/    互联网上最大的Git服务提供者，可提供公共、私有（规模受限）的代码托管服务
-- Gitlab - 开源的Git服务系统，可以自由部署私有的Git服务。
+- Gitlab - 开源的Git服务系统，可以自由部署私有的Git服务。见 Gitlab 安装指南。
 
 ### 安装Git
 
@@ -164,7 +164,17 @@ git checkout < 分支名 > # 切换到分支
 git checkout -b < 本地 branch> [-t <远端别名>/<远端分支>] #-b 新建本地分支并切换到分支, -t 绑定远端分支
 git merge < 分支名 > # 合并某分支到当前分支
 ```
-## Git 常见操作
+## Git 分支的概念
+
+在版本管理中，每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。
+
+详细内容见 [Git 分支详解](https://www.cnblogs.com/dazhidacheng/p/7798358.html)。
+
+## 在团队中使用Git
+
+详见 Git 在团队中的最佳实践--如何正确使用Git Flow 。
+
+## Git 常用操作
 
 [![img](Git 版本控制实用指南.assets/fAhm82RJ1.png)](http://gityuan.com/images/git/1.png)
 
@@ -255,6 +265,10 @@ git add -i // 交互式添加文件到暂存区
 ## Git 在团队中的使用
 
 见 另一篇 Git 在团队中的最佳实践
+
+## GIT 图书
+
+- [Pro Git](https://git-scm.com/book/zh/v2) 《精通 Git（第二版）》的在线版本，强烈推荐
 
 ## 更多参考
 
