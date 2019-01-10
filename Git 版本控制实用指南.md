@@ -8,6 +8,8 @@ SVN 是集中式版本控制系统，版本库是集中放在中央服务器的�
 
 Git 是分布式版本控制系统，它就没有中央服务器的，个人的电脑就是一个完整的版本库，个人工作的时候不需要联网。既然每个人的电脑都有一个完整的版本库，那多个人如何协作呢？比如说自己在电脑上改了文件 A，其他人也在电脑上改了文件 A。这时，你们两之间只需把各自的修改推送给对方，就可以互相看到对方的修改了。
 
+分布式相比于集中式的最大区别在于开发者可以提交到本地，每个开发者通过克隆（git clone），在本地机器上拷贝一个完整的Git仓库。
+
 ## 版本库
 
 什么是版本库呢？版本库又名仓库，英文名**repository**，你可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。
@@ -83,21 +85,65 @@ participant 远程仓库
 
 ```
 
+以上包括一些简单而常用的命令，但是先不关心这些，先来了解下面这4个专有名词。
 
+- Workspace：工作区
+- Index / Stage：暂存区
+- Repository：仓库区（或本地仓库）
+- Remote：远程仓库
+
+### 工作区
+
+程序员进行开发改动的地方，是你当前看到的，也是最新的。
+
+平常我们开发就是拷贝远程仓库中的一个分支，基于该分支进行开发。在开发过程中就是对工作区的操作。
+
+### 暂存区
+
+.git目录下的index文件, 暂存区会记录`git add`添加文件的相关信息(文件名、大小、timestamp...)，不保存文件实体, 通过id指向每个文件实体。可以使用`git status`查看暂存区的状态。暂存区标记了你当前工作区中，哪些内容是被git管理的。
+
+当你完成某个需求或功能后需要提交到远程仓库，那么第一步就是通过`git add`先提交到暂存区，被git管理。
+
+### 本地仓库
+
+保存了对象被提交 过的各个版本，比起工作区和暂存区的内容，它要更旧一些。
+
+`git commit`后同步index的目录树到本地仓库，方便从下一步通过`git push`同步本地仓库与远程仓库的同步。
+
+### 远程仓库
+
+远程仓库的内容可能被分布在多个地点的处于协作关系的本地仓库修改，因此它可能与本地仓库同步，也可能不同步，但是它的内容是最旧的。
+
+**小结**
+
+1. 任何对象都是在工作区中诞生和被修改；
+2. 任何修改都是从进入index区才开始被版本控制；
+3. 只有把修改提交到本地仓库，该修改才能在仓库中留下痕迹；
+4. 与协作者分享本地的修改，可以把它们push到远程仓库来共享。
 
 ## Git 工具
 
 ### Git客户端
 
 - [Git](https://git-scm.com/) - Mac 和 Linux 系统推荐使用终端即可，Git 一开始的命令的确很多，别无它法，熟能生巧，多练习即可能够掌握日常使用的一些命令
+
 - [Git for windows](https://msysgit.github.io/) 针对 Window 系统发布的客户端，集成了 Shell 窗口，方便在 Win 下面使用命令操作。
+
 - [TortoiseGit](https://tortoisegit.org/) -  在window下使用git，那就不得不提“乌龟”，安装了 Tortoise 后，右键图形化操作根本分辨不出来哪是 Git，哪是 Svn，很方便使用 Svn 的用户过度过来。
+
 - [SourceTree](https://www.sourcetreeapp.com/) -  免费，功能齐全，Mac+Window 版本，集成 Github 等服务
+
+测试git是否安装成功
+
+  ```bash
+  $ git --version
+  git version 2.16.2
+  ```
 
 ### Git 服务器端
 
 - Github - https://github.com/    互联网上最大的Git服务提供者，可提供公共、私有（规模受限）的代码托管服务
-- Gitlab - 开源的Git服务系统，可以自由部署私有的Git服务。
+- Gitlab - 开源的Git服务系统，可以自由部署私有的Git服务。见 Gitlab 安装指南。
 
 ### 安装Git
 
@@ -130,41 +176,37 @@ $ git config --global user.email "email@example.com"
 
 ## Git 常用命令
 
-`<xxx>` 自定义内容、`[xxx]` 可选内容 、`[<xxx>]` 自定义可选内容
+![img](Git 版本控制实用指南.assets/4389199-ee631c43d3f89b99.webp)
 
-```
-# 初始设置
-git config --global user.name "<用户名>" # 设置用户名
-git config --global user.email "<电子邮件>" # 设置电子邮件
+Git 中 `HEAD` 的概念
 
-# 本地操作
-git add [-i] # 保存更新，-i 为逐个确认。
-git status # 检查更新。
-git commit [-a] -m "< 更新说明 >" # 提交更新，-a 为包含内容修改和增删，-m 为说明信息，也可以使用 -am。
+**HEAD**，它始终指向当前所处分支的最新的提交点。你所处的分支变化了，或者产生了新的提交点，HEAD就会跟着改变。
 
-# 远端操作
-git clone <git 地址 > # 克隆到本地。
-git fetch # 远端抓取。
-git merge # 与本地当前分支合并。
-git pull [<远端别名>] [<远端 branch>] # 抓取并合并, 相当于第 2、3 步
-git push [-f] [<远端别名>] [<远端 branch>] # 推送到远端，-f 为强制覆盖
-git remote add <别名> <git 地址> # 设置远端别名
-git remote [-v] # 列出远端，-v 为详细信息
-git remote show <远端别名> # 查看远端信息
-git remote rename <远端别名> <新远端别名> # 重命名远端
-git remote rm < 远端别名 > # 删除远端
-git remote update [< 远端别名 >] # 更新分支列表
+## Git 分支的概念
 
-# 分支相关
-git branch [-r] [-a] # 列出分支，-r 远端 ,-a 全部
-git branch < 分支名 > # 新建分支
-git branch -b < 分支名 > # 新建并切换分支
-git branch -d < 分支名 > # 删除分支
-git checkout < 分支名 > # 切换到分支
-git checkout -b < 本地 branch> [-t <远端别名>/<远端分支>] #-b 新建本地分支并切换到分支, -t 绑定远端分支
-git merge < 分支名 > # 合并某分支到当前分支
-```
-## Git 常见操作
+在版本管理中，每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。
+
+详细内容见 [Git 分支详解](https://www.cnblogs.com/dazhidacheng/p/7798358.html)。
+
+## 工作流程
+
+一般 Git 工作流程如下：
+
+- 克隆 Git 资源作为工作目录。
+
+- 在克隆的资源上添加或修改文件。
+
+- 如果其他人修改了，你可以更新资源。
+
+- 在提交前查看修改。
+
+- 提交修改。
+
+- 在修改完成后，如果发现错误，可以撤回提交并再次修改并提交。
+
+![Git 的工作流程](Git 版本控制实用指南.assets/4262139-c4b3bbb6195acda1..webp)
+
+## Git 常用操作
 
 [![img](Git 版本控制实用指南.assets/fAhm82RJ1.png)](http://gityuan.com/images/git/1.png)
 
@@ -180,7 +222,7 @@ git merge < 分支名 > # 合并某分支到当前分支
 
 ### 初始化
 
-```
+```bash
 # 初始化 
 git init // 创建
 git clone /path/to/repository // 检出
@@ -189,14 +231,16 @@ git config --global user.name "Name" // 配置用户名
 ```
 ### 日常操作
 
-```
-# 操作
+```bash
+# add 操作：主要实现将工作区修改的内容提交到暂存区，交由git管理。
 git add <file> // 文件添加，A → B
 git add . // 所有文件添加，A → B
 
+# commit 操作：主要实现将暂存区的内容提交到本地仓库，并使得当前分支的HEAD向后移动一个提交点。
 git commit -m "代码提交信息" // 文件提交，B → C
 git commit --amend // 与上次 commit 合并, *B → C
 
+# push：上传本地仓库分支到远程仓库分支，实现同步。
 git push origin master // 推送至 master 分支, C → D
 git pull // 更新本地仓库至最新改动， D → A
 git fetch // 抓取远程仓库更新， D → C
@@ -209,7 +253,7 @@ git show// 显示某次提交的内容
 
 ###  撤销操作
 
-```
+```bash
 # 撤销操作
 git reset <file>// 某个文件索引会回滚到最后一次提交， C → B
 git reset// 索引会回滚到最后一次提交， C → B
@@ -220,19 +264,32 @@ git checkout -- files // 文件从 index 复制到 workspace， B → A
 git checkout HEAD -- files // 文件从 local repository 复制到 workspace， C → A
 ```
 
+reset命令把当前分支指向另一个位置，并且相应的变动工作区和暂存区。
+
 ### 分支相关
 
-```
-# 分支相关
+```bash
+# branch 分支相关：涉及到协作，自然会涉及到分支，关于分支，大概有展示分支，切换分支，创建分支，删除分支这四种操作。
 git checkout -b branch_name // 创建名叫“branch_name” 的分支，并切换过去 
 git checkout master // 切换回主分支
 git branch -d branch_name // 删除名叫“branch_name” 的分支
 git push origin branch_name // 推送分支到远端仓库
-git merge branch_name // 合并分支 branch_name 到当前分支(如 master)
-git rebase // 衍合，线性化的自动， D → A
+
+# merge 合并分支：把不同的分支合并起来。
+
+git merge branch_name # 合并分支 branch_name 到当前分支(如 master)
+git fetch [remote]	# merge之前先拉一下远程仓库最新代码
 ```
 
+![分支合并](Git 版本控制实用指南.assets/4389199-9f9069d6edd455fa.webp)
+
+merge命令把不同的分支合并起来。如上图，在实际开放中，我们可能从master分支中切出一个分支，然后进行开发完成需求，中间经过R3，R4，R5的commit记录，最后开发完成需要合入master中，这便用到了merge。
+
 ### 冲突处理
+
+一般在merge之后，会出现**代码冲突（conflict）**的情况，需要针对冲突情况，需要手动解除冲突。主要是因为两个用户修改了同一文件的同一块区域。如下图所示，需要手动解除。
+
+![代码冲突(Git%20%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%AE%9E%E7%94%A8%E6%8C%87%E5%8D%97.assets/4389199-01f5ea82c147586a.webp)](Git 版本控制实用指南.assets/4389199-01f5ea82c147586a.webp)
 
 ```
 # 冲突处理
@@ -240,6 +297,21 @@ git diff // 对比 workspace 与 index
 git diff HEAD // 对于 workspace 与最后一次 commit
 git diff <source_branch> <target_branch> // 对比差异
 git add <filename> // 修改完冲突，需要 add 以标记合并成功
+```
+
+### 衍合（rebase）
+
+rebase又称为衍合，是合并的另外一种选择。
+
+在开始阶段，我们处于new分支上，执行`git rebase dev`，那么new分支上新的commit都在master分支上重演一遍，最后checkout切换回到new分支。这一点与merge是一样的，合并前后所处的分支并没有改变。`git rebase dev`，通俗的解释就是new分支想站在dev的肩膀上继续下去。rebase也需要手动解决冲突。
+
+merge操作会生成一个新的节点，之前的提交分开显示。而rebase操作不会生成新的节点，是将两个分支融合成一个线性的提交。
+
+![衍合(rebase)](Git 版本控制实用指南.assets/4389199-69fa6b680835ecf5.webp)
+
+```bash
+# rebase
+git rebase # 衍合，线性化的自动， D → A
 ```
 
 ### 其他
@@ -254,7 +326,11 @@ git add -i // 交互式添加文件到暂存区
 
 ## Git 在团队中的使用
 
-见 另一篇 Git 在团队中的最佳实践
+详见 Git 在团队中的最佳实践--如何正确使用Git Flow 。
+
+## GIT 图书
+
+- [Pro Git](https://git-scm.com/book/zh/v2) 《精通 Git（第二版）》的在线版本，强烈推荐
 
 ## 更多参考
 
