@@ -176,7 +176,7 @@ $ git config --global user.email "email@example.com"
 
 ## Git 常用命令
 
-![img](Git 版本控制实用指南.assets/4389199-ee631c43d3f89b99.webp)
+![Git 常用命令速查表](Git 版本控制实用指南.assets/011500266295799.jpg)
 
 Git 中 `HEAD` 的概念
 
@@ -208,7 +208,7 @@ Git 中 `HEAD` 的概念
 
 ## Git 常用操作
 
-[![img](Git 版本控制实用指南.assets/fAhm82RJ1.png)](http://gityuan.com/images/git/1.png)
+![img](Git 版本控制实用指南.assets/fAhm82RJ1.png)
 
 - workspace: 本地的工作目录。（记作 A）
 
@@ -289,7 +289,7 @@ merge命令把不同的分支合并起来。如上图，在实际开放中，我
 
 一般在merge之后，会出现**代码冲突（conflict）**的情况，需要针对冲突情况，需要手动解除冲突。主要是因为两个用户修改了同一文件的同一块区域。如下图所示，需要手动解除。
 
-![代码冲突(Git%20%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%AE%9E%E7%94%A8%E6%8C%87%E5%8D%97.assets/4389199-01f5ea82c147586a.webp)](Git 版本控制实用指南.assets/4389199-01f5ea82c147586a.webp)
+![代码冲突](Git 版本控制实用指南.assets/4389199-01f5ea82c147586a.webp)
 
 ```
 # 冲突处理
@@ -327,6 +327,10 @@ git add -i // 交互式添加文件到暂存区
 ## Git 在团队中的使用
 
 详见 Git 在团队中的最佳实践--如何正确使用Git Flow 。
+
+## GIT 图书
+
+- [Pro Git](https://git-scm.com/book/zh/v2) 《精通 Git（第二版）》的在线版本，强烈推荐
 
 ## GIT 图书
 
