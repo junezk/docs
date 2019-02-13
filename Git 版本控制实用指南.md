@@ -1,6 +1,6 @@
 # Git 版本控制实用指南
 
-Git作为一个目前非常流行的版本管理工具，深受开发者的喜爱。
+Git 作为一个目前非常流行的版本管理工具，深受开发者的喜爱。
 
 ## SVN 与 Git 的最主要的区别
 
@@ -8,42 +8,44 @@ SVN 是集中式版本控制系统，版本库是集中放在中央服务器的�
 
 Git 是分布式版本控制系统，它就没有中央服务器的，个人的电脑就是一个完整的版本库，个人工作的时候不需要联网。既然每个人的电脑都有一个完整的版本库，那多个人如何协作呢？比如说自己在电脑上改了文件 A，其他人也在电脑上改了文件 A。这时，你们两之间只需把各自的修改推送给对方，就可以互相看到对方的修改了。
 
-分布式相比于集中式的最大区别在于开发者可以提交到本地，每个开发者通过克隆（git clone），在本地机器上拷贝一个完整的Git仓库。
+分布式相比于集中式的最大区别在于开发者可以提交到本地，每个开发者通过克隆（git clone），在本地机器上拷贝一个完整的 Git 仓库。
 
 ## 版本库
 
-什么是版本库呢？版本库又名仓库，英文名**repository**，你可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。
+什么是版本库呢？版本库又名仓库，英文名**repository**，你可以简单理解成一个目录，这个目录里面的所有文件都可以被 Git 管理起来，每个文件的修改、删除，Git 都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。
 
-***如果你使用Windows系统，为了避免遇到各种莫名其妙的问题，请确保目录名（包括父目录）不包含中文。***
+**_如果你使用 Windows 系统，为了避免遇到各种莫名其妙的问题，请确保目录名（包括父目录）不包含中文。_**
 
 ### 创建版本库
 
-`git init`命令把这个目录变成Git可以管理的仓库
+`git init`命令把这个目录变成 Git 可以管理的仓库
 
-```
+```bash
 $ git init
 Initialized empty Git repository in /Users/michael/learngit/.git/
 ```
 
-细心的读者可以发现当前目录下多了一个`.git`的目录，这个目录是Git来跟踪管理版本库的，没事千万不要手动修改这个目录里面的文件，把Git仓库给破坏了。如果你没有看到`.git`目录，那是因为这个目录默认是隐藏的，用`ls -ah`命令就可以看见。
+细心的读者可以发现当前目录下多了一个`.git`的目录，这个目录是 Git 来跟踪管理版本库的，没事千万不要手动修改这个目录里面的文件，把 Git 仓库给破坏了。如果你没有看到`.git`目录，那是因为这个目录默认是隐藏的，用`ls -ah`命令就可以看见。
 
-不一定必须在空目录下创建Git仓库，从一个已经有内容的目录开始创建也是可以的。
+不一定必须在空目录下创建 Git 仓库，从一个已经有内容的目录开始创建也是可以的。
 
 ### 把文件添加到版本库
 
-所有的版本控制系统，其实只能跟踪文本文件的改动，比如TXT文件、网页文件、程序代码文件等等，Git也不例外。版本控制系统可以告诉你每次的改动，比如在第5行加了一个单词“Linux”，在第8行删了一个单词“Windows”。而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化，只能把二进制文件每次改动串起来，也就是只知道图片从100KB改成了120KB，但到底改了啥，版本控制系统不知道，也没法知道。
+所有的版本控制系统，其实只能跟踪文本文件的改动，比如 TXT 文件、网页文件、程序代码文件等等，Git 也不例外。版本控制系统可以告诉你每次的改动，比如在第 5 行加了一个单词“Linux”，在第 8 行删了一个单词“Windows”。而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化，只能把二进制文件每次改动串起来，也就是只知道图片从 100KB 改成了 120KB，但到底改了啥，版本控制系统不知道，也没法知道。
 
-Microsoft的Word格式是二进制格式，因此，版本控制系统是没法跟踪Word文件的改动的，前面我们举的例子只是为了演示，如果要真正使用版本控制系统，就要以纯文本方式编写文件。
+Microsoft 的 Word 格式是二进制格式，因此，版本控制系统是没法跟踪 Word 文件的改动的，前面我们举的例子只是为了演示，如果要真正使用版本控制系统，就要以纯文本方式编写文件。
 
-因为文本是有编码的，比如中文有常用的GBK编码，日文有Shift_JIS编码，如果没有历史遗留问题，强烈建议使用标准的UTF-8编码，所有语言使用同一种编码，既没有冲突，又被所有平台所支持。
+因为文本是有编码的，比如中文有常用的 GBK 编码，日文有 Shift_JIS 编码，如果没有历史遗留问题，强烈建议使用标准的 UTF-8 编码，所有语言使用同一种编码，既没有冲突，又被所有平台所支持。
 
-首先，使用命令`git add`告诉Git，把文件添加到仓库：
+首先，使用命令`git add`告诉 Git，把文件添加到仓库：
 
-```
+```bash
 git add readme.txt
 ```
-第二步，用命令git commit告诉Git，把文件提交到仓库：
-```
+
+第二步，用命令 git commit 告诉 Git，把文件提交到仓库：
+
+```bash
 $ git commit -m "wrote a readme file"
 [master (root-commit) eaadf4e] wrote a readme file
  1 file changed, 2 insertions(+)
@@ -52,15 +54,15 @@ $ git commit -m "wrote a readme file"
 
 `git commit`命令，`-m`后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录。
 
-`git commit`命令执行成功后反馈显示，`1 file changed`：1个文件被改动（新添加的readme.txt文件）；`2 insertions`：插入了两行内容（readme.txt有两行内容）。
+`git commit`命令执行成功后反馈显示，`1 file changed`：1 个文件被改动（新添加的 readme.txt 文件）；`2 insertions`：插入了两行内容（readme.txt 有两行内容）。
 
-git commit一次会提交多个文件，会将暂存区内的所有改变提交给本地版本库。
+git commit 一次会提交多个文件，会将暂存区内的所有改变提交给本地版本库。
 
-## Git四大域
+## Git 四大域
 
-git四大域：工作目录，暂存区，仓库，远程仓库。
+git 四大域：工作目录，暂存区，仓库，远程仓库。
 
-git对文件的操作都是在四大域上进行的，文件可以在四大域内与四大域间进行各种操作。（有一个例外，进行“git stash”系列操作时，文件可能被保存到四大域外的堆栈中）
+git 对文件的操作都是在四大域上进行的，文件可以在四大域内与四大域间进行各种操作。（有一个例外，进行“git stash”系列操作时，文件可能被保存到四大域外的堆栈中）
 
 ```sequence
 participant 工作目录
@@ -85,7 +87,7 @@ participant 远程仓库
 
 ```
 
-以上包括一些简单而常用的命令，但是先不关心这些，先来了解下面这4个专有名词。
+以上包括一些简单而常用的命令，但是先不关心这些，先来了解下面这 4 个专有名词。
 
 - Workspace：工作区
 - Index / Stage：暂存区
@@ -100,15 +102,15 @@ participant 远程仓库
 
 ### 暂存区
 
-.git目录下的index文件, 暂存区会记录`git add`添加文件的相关信息(文件名、大小、timestamp...)，不保存文件实体, 通过id指向每个文件实体。可以使用`git status`查看暂存区的状态。暂存区标记了你当前工作区中，哪些内容是被git管理的。
+.git 目录下的 index 文件, 暂存区会记录`git add`添加文件的相关信息(文件名、大小、timestamp...)，不保存文件实体, 通过 id 指向每个文件实体。可以使用`git status`查看暂存区的状态。暂存区标记了你当前工作区中，哪些内容是被 git 管理的。
 
-当你完成某个需求或功能后需要提交到远程仓库，那么第一步就是通过`git add`先提交到暂存区，被git管理。
+当你完成某个需求或功能后需要提交到远程仓库，那么第一步就是通过`git add`先提交到暂存区，被 git 管理。
 
 ### 本地仓库
 
 保存了对象被提交 过的各个版本，比起工作区和暂存区的内容，它要更旧一些。
 
-`git commit`后同步index的目录树到本地仓库，方便从下一步通过`git push`同步本地仓库与远程仓库的同步。
+`git commit`后同步 index 的目录树到本地仓库，方便从下一步通过`git push`同步本地仓库与远程仓库的同步。
 
 ### 远程仓库
 
@@ -117,62 +119,62 @@ participant 远程仓库
 **小结**
 
 1. 任何对象都是在工作区中诞生和被修改；
-2. 任何修改都是从进入index区才开始被版本控制；
+2. 任何修改都是从进入 index 区才开始被版本控制；
 3. 只有把修改提交到本地仓库，该修改才能在仓库中留下痕迹；
-4. 与协作者分享本地的修改，可以把它们push到远程仓库来共享。
+4. 与协作者分享本地的修改，可以把它们 push 到远程仓库来共享。
 
 ## Git 工具
 
-### Git客户端
+### Git 客户端
 
 - [Git](https://git-scm.com/) - Mac 和 Linux 系统推荐使用终端即可，Git 一开始的命令的确很多，别无它法，熟能生巧，多练习即可能够掌握日常使用的一些命令
 
 - [Git for windows](https://msysgit.github.io/) 针对 Window 系统发布的客户端，集成了 Shell 窗口，方便在 Win 下面使用命令操作。
 
-- [TortoiseGit](https://tortoisegit.org/) -  在window下使用git，那就不得不提“乌龟”，安装了 Tortoise 后，右键图形化操作根本分辨不出来哪是 Git，哪是 Svn，很方便使用 Svn 的用户过度过来。
+- [TortoiseGit](https://tortoisegit.org/) - 在 window 下使用 git，那就不得不提“乌龟”，安装了 Tortoise 后，右键图形化操作根本分辨不出来哪是 Git，哪是 Svn，很方便使用 Svn 的用户过度过来。
 
-- [SourceTree](https://www.sourcetreeapp.com/) -  免费，功能齐全，Mac+Window 版本，集成 Github 等服务
+- [SourceTree](https://www.sourcetreeapp.com/) - 免费，功能齐全，Mac+Window 版本，集成 Github 等服务
 
-测试git是否安装成功
+测试 git 是否安装成功
 
-  ```bash
-  $ git --version
-  git version 2.16.2
-  ```
+```bash
+$ git --version
+git version 2.16.2
+```
 
 ### Git 服务器端
 
-- Github - https://github.com/    互联网上最大的Git服务提供者，可提供公共、私有（规模受限）的代码托管服务
-- Gitlab - 开源的Git服务系统，可以自由部署私有的Git服务。见 Gitlab 安装指南。
+- Github - https://github.com/ 互联网上最大的 Git 服务提供者，可提供公共、私有（规模受限）的代码托管服务
+- Gitlab - 开源的 Git 服务系统，可以自由部署私有的 Git 服务。见 Gitlab 安装指南。
 
-### 安装Git
+### 安装 Git
 
-#### 在Linux上安装Git
+#### 在 Linux 上安装 Git
 
-首先，你可以试着输入`git`，看看系统有没有安装Git：
+首先，你可以试着输入`git`，看看系统有没有安装 Git：
 
-```
+```bash
 $ git
 The program 'git' is currently not installed. You can install it by typing:
 sudo apt-get install git
 ```
 
-### 在Windows上安装Git
+### 在 Windows 上安装 Git
 
-在Windows上使用Git，可以从Git官网直接[下载安装程序](https://git-scm.com/downloads)，国内可能会很慢，也可以到一些可靠的网站下载后进行安装。
+在 Windows 上使用 Git，可以从 Git 官网直接[下载安装程序](https://git-scm.com/downloads)，国内可能会很慢，也可以到一些可靠的网站下载后进行安装。
 
-安装完成后，在开始菜单里找到“Git”->“Git Bash”，蹦出一个类似命令行窗口的东西，就说明Git安装成功！
+安装完成后，在开始菜单里找到“Git”->“Git Bash”，蹦出一个类似命令行窗口的东西，就说明 Git 安装成功！
 
 ![install-git-on-windows](Git 版本控制实用指南.assets/0.jpg)
 
 安装完成后，还需要最后一步设置，在命令行输入：
 
-```
+```bash
 $ git config --global user.name "Your Name"
 $ git config --global user.email "email@example.com"
 ```
 
-注意`git config`命令的`--global`参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。
+注意`git config`命令的`--global`参数，用了这个参数，表示你这台机器上所有的 Git 仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和 Email 地址。
 
 ## Git 常用命令
 
@@ -180,11 +182,11 @@ $ git config --global user.email "email@example.com"
 
 Git 中 `HEAD` 的概念
 
-**HEAD**，它始终指向当前所处分支的最新的提交点。你所处的分支变化了，或者产生了新的提交点，HEAD就会跟着改变。
+**HEAD**，它始终指向当前所处分支的最新的提交点。你所处的分支变化了，或者产生了新的提交点，HEAD 就会跟着改变。
 
 ## Git 分支的概念
 
-在版本管理中，每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。
+在版本管理中，每次提交，Git 都把它们串成一条时间线，这条时间线就是一个分支。
 
 详细内容见 [Git 分支详解](https://www.cnblogs.com/dazhidacheng/p/7798358.html)。
 
@@ -223,12 +225,13 @@ Git 中 `HEAD` 的概念
 ### 初始化
 
 ```bash
-# 初始化 
+# 初始化
 git init // 创建
 git clone /path/to/repository // 检出
 git config --global user.email "you@example.com" // 配置 email
 git config --global user.name "Name" // 配置用户名
 ```
+
 ### 日常操作
 
 ```bash
@@ -251,7 +254,7 @@ git diff// 查看详细修改内容
 git show// 显示某次提交的内容
 ```
 
-###  撤销操作
+### 撤销操作
 
 ```bash
 # 撤销操作
@@ -264,13 +267,13 @@ git checkout -- files // 文件从 index 复制到 workspace， B → A
 git checkout HEAD -- files // 文件从 local repository 复制到 workspace， C → A
 ```
 
-reset命令把当前分支指向另一个位置，并且相应的变动工作区和暂存区。
+reset 命令把当前分支指向另一个位置，并且相应的变动工作区和暂存区。
 
 ### 分支相关
 
 ```bash
 # branch 分支相关：涉及到协作，自然会涉及到分支，关于分支，大概有展示分支，切换分支，创建分支，删除分支这四种操作。
-git checkout -b branch_name // 创建名叫“branch_name” 的分支，并切换过去 
+git checkout -b branch_name // 创建名叫“branch_name” 的分支，并切换过去
 git checkout master // 切换回主分支
 git branch -d branch_name // 删除名叫“branch_name” 的分支
 git push origin branch_name // 推送分支到远端仓库
@@ -283,11 +286,11 @@ git fetch [remote]	# merge之前先拉一下远程仓库最新代码
 
 ![分支合并](Git 版本控制实用指南.assets/4389199-9f9069d6edd455fa.webp)
 
-merge命令把不同的分支合并起来。如上图，在实际开放中，我们可能从master分支中切出一个分支，然后进行开发完成需求，中间经过R3，R4，R5的commit记录，最后开发完成需要合入master中，这便用到了merge。
+merge 命令把不同的分支合并起来。如上图，在实际开放中，我们可能从 master 分支中切出一个分支，然后进行开发完成需求，中间经过 R3，R4，R5 的 commit 记录，最后开发完成需要合入 master 中，这便用到了 merge。
 
 ### 冲突处理
 
-一般在merge之后，会出现**代码冲突（conflict）**的情况，需要针对冲突情况，需要手动解除冲突。主要是因为两个用户修改了同一文件的同一块区域。如下图所示，需要手动解除。
+一般在 merge 之后，会出现**代码冲突（conflict）**的情况，需要针对冲突情况，需要手动解除冲突。主要是因为两个用户修改了同一文件的同一块区域。如下图所示，需要手动解除。
 
 ![代码冲突](Git 版本控制实用指南.assets/4389199-01f5ea82c147586a.webp)
 
@@ -301,11 +304,11 @@ git add <filename> // 修改完冲突，需要 add 以标记合并成功
 
 ### 衍合（rebase）
 
-rebase又称为衍合，是合并的另外一种选择。
+rebase 又称为衍合，是合并的另外一种选择。
 
-在开始阶段，我们处于new分支上，执行`git rebase dev`，那么new分支上新的commit都在master分支上重演一遍，最后checkout切换回到new分支。这一点与merge是一样的，合并前后所处的分支并没有改变。`git rebase dev`，通俗的解释就是new分支想站在dev的肩膀上继续下去。rebase也需要手动解决冲突。
+在开始阶段，我们处于 new 分支上，执行`git rebase dev`，那么 new 分支上新的 commit 都在 master 分支上重演一遍，最后 checkout 切换回到 new 分支。这一点与 merge 是一样的，合并前后所处的分支并没有改变。`git rebase dev`，通俗的解释就是 new 分支想站在 dev 的肩膀上继续下去。rebase 也需要手动解决冲突。
 
-merge操作会生成一个新的节点，之前的提交分开显示。而rebase操作不会生成新的节点，是将两个分支融合成一个线性的提交。
+merge 操作会生成一个新的节点，之前的提交分开显示。而 rebase 操作不会生成新的节点，是将两个分支融合成一个线性的提交。
 
 ![衍合(rebase)](Git 版本控制实用指南.assets/4389199-69fa6b680835ecf5.webp)
 
@@ -326,7 +329,7 @@ git add -i // 交互式添加文件到暂存区
 
 ## Git 在团队中的使用
 
-详见 Git 在团队中的最佳实践--如何正确使用Git Flow 。
+详见 Git 在团队中的最佳实践--如何正确使用 Git Flow 。
 
 ## GIT 图书
 
@@ -346,13 +349,13 @@ git add -i // 交互式添加文件到暂存区
 
 #### 撤销一个“已公开”的改变
 
-**场景:** 你已经执行了 `git push`, 把你的修改发送到了 远端仓库，如GitHub，现在你意识到这些 commit 的其中一个是有问题的，你需要撤销那一个 commit.
+**场景:** 你已经执行了 `git push`, 把你的修改发送到了 远端仓库，如 GitHub，现在你意识到这些 commit 的其中一个是有问题的，你需要撤销那一个 commit.
 
 **方法:** `git revert <SHA>`
 
-**原理:** `git revert` 会产生一个新的 commit，它和指定 SHA 对应的 commit 是相反的（或者说是反转的）。如果原先的 commit 是“物质”，新的 commit 就是“反物质” — 任何从原先的 commit 里删除的内容会在新的 commit 里被加回去，任何在原先的 commit 里加入的内容会在新的 commit  里被删除。
+**原理:** `git revert` 会产生一个新的 commit，它和指定 SHA 对应的 commit 是相反的（或者说是反转的）。如果原先的 commit 是“物质”，新的 commit 就是“反物质” — 任何从原先的 commit 里删除的内容会在新的 commit 里被加回去，任何在原先的 commit 里加入的内容会在新的 commit 里被删除。
 
-这是 Git 最安全、最基本的撤销场景，因为它并不会*改变*历史 —— 之后你可以  `git push `新的正确的 commit 来抵消你错误提交的 commit。
+这是 Git 最安全、最基本的撤销场景，因为它并不会*改变*历史 —— 之后你可以 `git push`新的正确的 commit 来抵消你错误提交的 commit。
 
 #### 修正最后一个 commit 消息
 
@@ -392,7 +395,7 @@ git add -i // 交互式添加文件到暂存区
 
 一些注意事项：
 
-- `它涉及的只是 HEAD` 的改变。在你切换分支、用 `git commit` 进行提交、以及用 `git reset` 撤销 commit 时，`HEAD` 会改变，但当你用  `git checkout -- <bad filename>` 撤销时（正如我们在前面讲到的情况），HEAD 并不会改变 — 如前所述，这些修改从来没有被提交过，因此 reflog 也无法帮助我们恢复它们。
+- `它涉及的只是 HEAD` 的改变。在你切换分支、用 `git commit` 进行提交、以及用 `git reset` 撤销 commit 时，`HEAD` 会改变，但当你用 `git checkout -- <bad filename>` 撤销时（正如我们在前面讲到的情况），HEAD 并不会改变 — 如前所述，这些修改从来没有被提交过，因此 reflog 也无法帮助我们恢复它们。
 - `git reflog` 不会永远保持。Git 会定期清理那些 “用不到的” 对象。不要指望几个月前的提交还一直躺在那里。
 - 你的 `reflog` 就是你的，只是你的。你不能用 `git reflog` 来恢复另一个开发者没有 push 过的 commit。
 
@@ -410,7 +413,7 @@ git add -i // 交互式添加文件到暂存区
 
 **方法:** `git branch feature`, `git reset --hard origin/master`, and `git checkout feature`
 
-**原理:** 你可能习惯了用 `git checkout -b <name> 创建新的分支 `— 这是创建新分支并马上 check out 的流行捷径 — 但是你不希望马上切换分支。这里， `git branch feature` 创建一个叫做 `feature` 的新分支并指向你最近的 commit，但还是让你 check out 在 `master 分支上。`
+**原理:** 你可能习惯了用 `git checkout -b <name> 创建新的分支`— 这是创建新分支并马上 check out 的流行捷径 — 但是你不希望马上切换分支。这里， `git branch feature` 创建一个叫做 `feature` 的新分支并指向你最近的 commit，但还是让你 check out 在 `master 分支上。`
 
 下一步，在提交任何新的 commit 之前，用 `git reset --hard` 把 `master` 分支倒回 `origin/master 。不过别担心，那些 commit 还在` `feature 分支里。`
 
@@ -427,7 +430,7 @@ git add -i // 交互式添加文件到暂存区
 `git rebase master` 会做如下的事情：
 
 - 首先它会找到你当前 check out 的分支和 `master 分支的共同祖先。`
-- 然后它 reset 当前  check out 的分支到那个共同祖先，在一个临时保存区存放所有之前的提交。
+- 然后它 reset 当前 check out 的分支到那个共同祖先，在一个临时保存区存放所有之前的提交。
 - 然后它把当前 check out 的分支提到 `master` 的末尾部分，并从临时保存区重新把存放的 commit 提交到 `master` 分支的最后一个 commit 之后。
 
 #### 大量的撤销/恢复
@@ -442,9 +445,9 @@ git add -i // 交互式添加文件到暂存区
 
 [![rebase-interactive1](Git 版本控制实用指南.assets/f6b1ab88-d891-11e4-97c1-e0630ac74e74.png)](https://cloud.githubusercontent.com/assets/2077/6953863/f6b1ab88-d891-11e4-97c1-e0630ac74e74.png)
 
-前面两列是键：第一个是选定的命令，对应第二列里的 SHA 确定的 commit。缺省情况下， `rebase -i`  假定每个 commit 都要通过  `pick` 命令被运用。
+前面两列是键：第一个是选定的命令，对应第二列里的 SHA 确定的 commit。缺省情况下， `rebase -i` 假定每个 commit 都要通过 `pick` 命令被运用。
 
-要丢弃一个 commit，只要在编辑器里删除那一行就行了。如果你不再需要项目里的那几个错误的提交，你可以删除上例中的1、3、4行。
+要丢弃一个 commit，只要在编辑器里删除那一行就行了。如果你不再需要项目里的那几个错误的提交，你可以删除上例中的 1、3、4 行。
 
 如果你需要保留 commit 的内容，而是对 commit 消息进行编辑，你可以使用 `reword` 命令。 把第一列里的 `pick` 替换为 `reword` (或者直接用 `r`)。有人会觉得在这里直接重写 commit 消息就行了，但是这样不管用 —`rebase -i` 会忽略 SHA 列前面的任何东西。它后面的文本只是用来帮助我们记住 `0835fe2` 是干啥的。当你完成 `rebase -i` 的操作之后，你会被提示输入需要编写的任何 commit 消息。
 
@@ -454,7 +457,7 @@ git add -i // 交互式添加文件到暂存区
 
 `squash` 和 `fixup` 会“向上”合并 — 带有这两个命令的 commit 会被合并到它的前一个 commit 里。在这个例子里， `0835fe2` 和 `6943e85` 会被合并成一个 commit， `38f5e4e` 和 `af67f82` 会被合并成另一个。
 
-如果你选择了 `squash，` Git 会提示我们给新合并的 commit 一个新的 commit 消息； `fixup` 则会把合并清单里第一个 commit 的消息直接给新合并的 commit 。 这里，你知道 `af67f82` 是一个“完了完了….” 的 commit，所以你会留着 `38f5e4e` as的 commit 消息，但你会给合并了 `0835fe2` 和 `6943e85` 的新 commit 编写一个新的消息。
+如果你选择了 `squash，` Git 会提示我们给新合并的 commit 一个新的 commit 消息； `fixup` 则会把合并清单里第一个 commit 的消息直接给新合并的 commit 。 这里，你知道 `af67f82` 是一个“完了完了….” 的 commit，所以你会留着 `38f5e4e` as 的 commit 消息，但你会给合并了 `0835fe2` 和 `6943e85` 的新 commit 编写一个新的消息。
 
 在你保存并退出编辑器的时候，Git 会按从顶部到底部的顺序运用你的 commit。你可以通过在保存前修改 commit 顺序来改变运用的顺序。如果你愿意，你也可以通过如下安排把 `af67f82` 和 `0835fe2` 合并到一起：
 
@@ -470,11 +473,11 @@ git add -i // 交互式添加文件到暂存区
 
 如果你不想被提示为新合并的 commit 输入一条新的 commit 消息，你也可以利用 `git commit --fixup` 。在这个情况下，你很可能会用`commit --fixup` ，因为你只是希望在 `rebase` 的时候使用早期 commit 的 commit 消息。
 
-`rebase --autosquash -i`  会激活一个交互式的 `rebase` 编辑器，但是编辑器打开的时候，在 commit 清单里任何 `squash!` 和 `fixup!` 的 commit 都已经配对到目标 commit 上了，如下所示：
+`rebase --autosquash -i` 会激活一个交互式的 `rebase` 编辑器，但是编辑器打开的时候，在 commit 清单里任何 `squash!` 和 `fixup!` 的 commit 都已经配对到目标 commit 上了，如下所示：
 
 [![rebase-autosquash](Git 版本控制实用指南.assets/f6a7a1d8-d891-11e4-8784-c32262ff54da.png)](https://cloud.githubusercontent.com/assets/2077/6953862/f6a7a1d8-d891-11e4-8784-c32262ff54da.png)
 
-在使用 `--squash` 和 `--fixup` 的时候，你可能不记得想要修正的 commit 的 SHA 了— 只记得它是前面第 1 个或第 5 个 commit。你会发现 Git 的 `^` 和 `~ 操作符特别好用。``HEAD^` 是 `HEAD `的前一个 commit。 `HEAD~4` 是 `HEAD` 往前第 4 个 – 或者一起算，倒数第 5 个 commit。
+在使用 `--squash` 和 `--fixup` 的时候，你可能不记得想要修正的 commit 的 SHA 了— 只记得它是前面第 1 个或第 5 个 commit。你会发现 Git 的 `^` 和 ` ~ 操作符特别好用。``HEAD^ ` 是 `HEAD`的前一个 commit。 `HEAD~4` 是 `HEAD` 往前第 4 个 – 或者一起算，倒数第 5 个 commit。
 
 #### 停止追踪一个文件
 
@@ -482,7 +485,6 @@ git add -i // 交互式添加文件到暂存区
 
 **方法:** `git rm --cached application.log`
 
-**原理:** 虽然 `.gitignore` 会阻止 Git 追踪文件的修改，甚至不关注文件是否存在，但这只是针对那些以前从来没有追踪过的文件。一旦有个文件被加入并提交了，Git 就会持续关注该文件的改变。类似地，如果你利用 `git add -f` 来强制或覆盖了 `.gitignore`， Git 还会持续追踪改变的情况。之后你就不必用`-f`  来添加这个文件了。
+**原理:** 虽然 `.gitignore` 会阻止 Git 追踪文件的修改，甚至不关注文件是否存在，但这只是针对那些以前从来没有追踪过的文件。一旦有个文件被加入并提交了，Git 就会持续关注该文件的改变。类似地，如果你利用 `git add -f` 来强制或覆盖了 `.gitignore`， Git 还会持续追踪改变的情况。之后你就不必用`-f` 来添加这个文件了。
 
-如果你希望从 Git 的追踪对象中删除那个本应忽略的文件， `git rm --cached` 会从追踪对象中删除它，但让文件在磁盘上保持原封不动。因为现在它已经被忽略了，你在  `git status` 里就不会再看见这个文件，也不会再偶然提交该文件的修改了。
-
+如果你希望从 Git 的追踪对象中删除那个本应忽略的文件， `git rm --cached` 会从追踪对象中删除它，但让文件在磁盘上保持原封不动。因为现在它已经被忽略了，你在 `git status` 里就不会再看见这个文件，也不会再偶然提交该文件的修改了。
