@@ -78,3 +78,12 @@ sudo chmod g+rw /var/mail/thufir
 # 然后执行mail就好了。
 ```
 
+3. 执行yum update 时报“Error: Protected multilib versions”错误。
+
+   ```bash
+   # 核心的命令主要是：
+   rpm -q package-names
+   rpm -e package-full-version
+   ```
+
+   

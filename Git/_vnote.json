@@ -1,0 +1,88 @@
+{
+    "created_time": "2019-02-26T08:31:00Z",
+    "files": [
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2019-02-26T08:31:00Z",
+            "modified_time": "2019-02-26T08:31:00Z",
+            "name": "Git 在团队中的最佳实践--如何正确使用Git Flow.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2019-02-26T08:31:00Z",
+            "modified_time": "2019-02-26T08:31:00Z",
+            "name": "Git 教你如何在Commit时有话可说.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2019-02-26T08:31:00Z",
+            "modified_time": "2019-02-26T08:31:00Z",
+            "name": "Git 版本控制实用指南.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2019-02-26T08:31:00Z",
+            "modified_time": "2019-02-26T08:31:00Z",
+            "name": "Gitlab 安装指南.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2019-02-26T08:31:00Z",
+            "modified_time": "2019-02-26T08:31:00Z",
+            "name": "Git工作流的最佳实践总结.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2019-02-26T08:31:00Z",
+            "modified_time": "2019-02-26T08:31:00Z",
+            "name": "Git简明教程.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2019-02-26T08:31:00Z",
+            "modified_time": "2019-02-26T08:31:00Z",
+            "name": "图解git原理与日常实用指南.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2019-02-26T08:31:00Z",
+            "modified_time": "2019-02-26T08:31:00Z",
+            "name": "成熟的 Git 分支模型.md",
+            "tags": [
+            ]
+        }
+    ],
+    "sub_directories": [
+    ],
+    "version": "1"
+}
