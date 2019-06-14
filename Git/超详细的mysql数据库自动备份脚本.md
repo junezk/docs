@@ -1,6 +1,6 @@
 # 超详细的mysql数据库自动备份脚本（附日志结果输出）
 
-# 概述
+## 概述
 
 最近梳理了下Oracle、mysql、sqlserver的一些备份情况，关于mysql之前只做了定期备份的脚本，但是并没有把备份是否正确输出为日志，所以前段时间调整了一下脚本，下面分享一下修改后的备份脚本，主要改了几个方面：
 
@@ -10,11 +10,13 @@
 
 **3、定期清理过期备份**
 
-# 01、备份脚本内容
+![超详细的mysql数据库自动备份脚本（附日志结果输出）值得收藏](超详细的mysql数据库自动备份脚本.assets/226b540eb49541b5b4f53b538897b3d5.jpg)
+
+## 01备份脚本内容
 
 存放位置：/home/scripts/mysql_backup.sh
 
-```bash
+```
 #!/bin/bash
 #this is mysqldump auto full backup script
 #Copyright by hwb
@@ -67,13 +69,15 @@ delete
 size
 ```
 
+![超详细的mysql数据库自动备份脚本（附日志结果输出）值得收藏](超详细的mysql数据库自动备份脚本.assets/ecafeeec97cd4bd895080cc1074a4b18.jpg)
 
+![超详细的mysql数据库自动备份脚本（附日志结果输出）值得收藏](超详细的mysql数据库自动备份脚本.assets/aca3389e7151440e826db3d2250117f9.jpg)
 
-# 02、日志脚本
+## 02日志脚本
 
 存放位置：/home/scripts/log_function.sh
 
-```bash
+```
 #!/bin/bash
 #log function
 #Copyright by hwb
@@ -106,16 +110,20 @@ fi
 }
 ```
 
-# 03、备份输出
+![超详细的mysql数据库自动备份脚本（附日志结果输出）值得收藏](超详细的mysql数据库自动备份脚本.assets/c497d98369914e6d85d540f7a1ea7c00.jpg)
+
+## 03备份输出
 
 输出结果如下：
 
 备份成功：
 
-![超详细的mysql数据库自动备份脚本（附日志结果输出）值得收藏](超详细的mysql数据库自动备份脚本.assets/bdb19a21019e4eebb4b17c37e9e61af0.jpg)
+![超详细的mysql数据库自动备份脚本（附日志结果输出）值得收藏](超详细的mysql数据库自动备份脚本.assets/bdb19a21019e4eebb4b17c37e9e61af0-1560389809605.jpg)
 
 备份失败：
 
-![超详细的mysql数据库自动备份脚本（附日志结果输出）值得收藏](超详细的mysql数据库自动备份脚本.assets/7824b7f1e9f94988ae6f85cda5270c1a.jpg)
+![超详细的mysql数据库自动备份脚本（附日志结果输出）值得收藏](超详细的mysql数据库自动备份脚本.assets/7824b7f1e9f94988ae6f85cda5270c1a-1560389819278.jpg)
 
 到这里就基本满足需求，也就不继续做优化了。
+
+脚本其实是写逻辑，只要逻辑通了，一般都可以满足需求，这个脚本大家也可以继续深入优化，时间比较赶，就不继续了。
