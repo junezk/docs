@@ -98,13 +98,13 @@ Flask 框架的简介
 
     #!flask/bin/python
     from flask import Flask
-
+    
     app = Flask(__name__)
-
+    
     @app.route('/')
     def index():
         return "Hello, World!"
-
+    
     if __name__ == '__main__':
         app.run(debug=True)
 
@@ -135,9 +135,9 @@ Flask 框架的简介
 
     #!flask/bin/python
     from flask import Flask, jsonify
-
+    
     app = Flask(__name__)
-
+    
     tasks = [
         {
             'id': 1,
@@ -152,11 +152,11 @@ Flask 框架的简介
             'done': False
         }
     ]
-
+    
     @app.route('/todo/api/v1.0/tasks', methods=['GET'])
     def get_tasks():
         return jsonify({'tasks': tasks})
-
+    
     if __name__ == '__main__':
         app.run(debug=True)
 
@@ -176,7 +176,7 @@ Flask 框架的简介
     Content-Length: 294
     Server: Werkzeug/0.8.3 Python/2.7.3
     Date: Mon, 20 May 2013 04:53:53 GMT
-
+    
     {
       "tasks": [
         {
@@ -199,7 +199,7 @@ Flask 框架的简介
 现在我们开始编写 GET 方法请求我们的任务资源的第二个版本。这是一个用来返回单独一个任务的函数::
 
     from flask import abort
-
+    
     @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['GET'])
     def get_task(task_id):
         task = filter(lambda t: t['id'] == task_id, tasks)
@@ -221,7 +221,7 @@ Flask 框架的简介
     Content-Length: 151
     Server: Werkzeug/0.8.3 Python/2.7.3
     Date: Mon, 20 May 2013 05:21:50 GMT
-
+    
     {
         "task": {
         "description": "Need to find a good Python tutorial on the web",
@@ -230,14 +230,14 @@ Flask 框架的简介
         "title": "Learn Python"
         }
     }
-
+    
     $ curl -i http://localhost:5000/todo/api/v1.0/tasks/3
     HTTP/1.0 404 NOT FOUND
     Content-Type: text/html
     Content-Length: 238
     Server: Werkzeug/0.8.3 Python/2.7.3
     Date: Mon, 20 May 2013 05:21:52 GMT
-
+    
     <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
     <title>404 Not Found</title>
     <h1>Not Found</h1>
@@ -247,7 +247,7 @@ Flask 框架的简介
 当我们请求 id #2 的资源时候，我们获取到了，但是当我们请求 #3 的时候返回了 404 错误。有关错误奇怪的是返回的是 HTML 信息而不是 JSON，这是因为 Flask 按照默认方式生成 404 响应。由于这是一个 Web service 客户端希望我们总是以 JSON 格式回应，所以我们需要改善我们的 404 错误处理程序::
 
     from flask import make_response
-
+    
     @app.errorhandler(404)
     def not_found(error):
         return make_response(jsonify({'error': 'Not found'}), 404)
@@ -260,7 +260,7 @@ Flask 框架的简介
     Content-Length: 26
     Server: Werkzeug/0.8.3 Python/2.7.3
     Date: Mon, 20 May 2013 05:36:54 GMT
-
+    
     {
         "error": "Not found"
     }
@@ -268,7 +268,7 @@ Flask 框架的简介
 接下来就是 POST 方法，我们用来在我们的任务数据库中插入一个新的任务::
 
     from flask import request
-
+    
     @app.route('/todo/api/v1.0/tasks', methods=['POST'])
     def create_task():
         if not request.json or not 'title' in request.json:
@@ -296,7 +296,7 @@ Flask 框架的简介
     Content-Length: 104
     Server: Werkzeug/0.8.3 Python/2.7.3
     Date: Mon, 20 May 2013 05:56:21 GMT
-
+    
     {
         "task": {
         "description": "",
@@ -318,7 +318,7 @@ Flask 框架的简介
     Content-Length: 423
     Server: Werkzeug/0.8.3 Python/2.7.3
     Date: Mon, 20 May 2013 05:57:44 GMT
-
+    
     {
         "tasks": [
         {
@@ -361,7 +361,7 @@ Flask 框架的简介
         task[0]['description'] = request.json.get('description', task[0]['description'])
         task[0]['done'] = request.json.get('done', task[0]['done'])
         return jsonify({'task': task[0]})
-
+    
     @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
     def delete_task(task_id):
         task = filter(lambda t: t['id'] == task_id, tasks)
@@ -380,7 +380,7 @@ delete_task 函数没有什么特别的。对于 update_task 函数，我们需�
     Content-Length: 170
     Server: Werkzeug/0.8.3 Python/2.7.3
     Date: Mon, 20 May 2013 07:10:16 GMT
-
+    
     {
         "task": [
         {
@@ -401,7 +401,7 @@ delete_task 函数没有什么特别的。对于 update_task 函数，我们需�
 不直接返回任务的 ids，我们直接返回控制这些任务的完整的 URI，以便客户端可以随时使用这些 URIs。为此，我们可以写一个小的辅助函数生成一个 “公共” 版本任务发送到客户端::
 
     from flask import url_for
-
+    
     def make_public_task(task):
         new_task = {}
         for field in task:
@@ -427,7 +427,7 @@ delete_task 函数没有什么特别的。对于 update_task 函数，我们需�
     Content-Length: 406
     Server: Werkzeug/0.8.3 Python/2.7.3
     Date: Mon, 20 May 2013 18:16:28 GMT
-
+    
     {
       "tasks": [
         {
@@ -469,13 +469,13 @@ delete_task 函数没有什么特别的。对于 update_task 函数，我们需�
 
     from flask.ext.httpauth import HTTPBasicAuth
     auth = HTTPBasicAuth()
-
+    
     @auth.get_password
     def get_password(username):
         if username == 'miguel':
             return 'python'
         return None
-
+    
     @auth.error_handler
     def unauthorized():
         return make_response(jsonify({'error': 'Unauthorized access'}), 401)
@@ -500,7 +500,7 @@ error_handler 回调函数是用于给客户端发送未授权错误代码。像
     WWW-Authenticate: Basic realm="Authentication Required"
     Server: Werkzeug/0.8.3 Python/2.7.3
     Date: Mon, 20 May 2013 06:41:14 GMT
-
+    
     {
         "error": "Unauthorized access"
     }
@@ -594,20 +594,20 @@ Flask-RESTful 提供了一个 Resource 基础类，它能够定义一个给定 U
 
     from flask import Flask
     from flask.ext.restful import Api, Resource
-
+    
     app = Flask(__name__)
     api = Api(app)
-
+    
     class UserAPI(Resource):
         def get(self, id):
             pass
-
+    
         def put(self, id):
             pass
-
+    
         def delete(self, id):
             pass
-
+    
     api.add_resource(UserAPI, '/users/<int:id>', endpoint = 'user')
 
 add_resource 函数使用指定的 endpoint 注册路由到框架上。如果没有指定 endpoint，Flask-RESTful 会根据类名生成一个，但是有时候有些函数比如 url_for 需要 endpoint，因此我会明确给 endpoint 赋值。
@@ -617,20 +617,20 @@ add_resource 函数使用指定的 endpoint 注册路由到框架上。如果没
     class TaskListAPI(Resource):
         def get(self):
             pass
-
+    
         def post(self):
             pass
-
+    
     class TaskAPI(Resource):
         def get(self, id):
             pass
-
+    
         def put(self, id):
             pass
-
+    
         def delete(self, id):
             pass
-
+    
     api.add_resource(TaskListAPI, '/todo/api/v1.0/tasks', endpoint = 'tasks')
     api.add_resource(TaskAPI, '/todo/api/v1.0/tasks/<int:id>', endpoint = 'task')
 
@@ -640,24 +640,26 @@ add_resource 函数使用指定的 endpoint 注册路由到框架上。如果没
 
 当我在以前的文章中实现此服务器的时候，我自己对请求的数据进行验证。例如，在之前版本中如何处理 PUT 的::
 
-    @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods = ['PUT'])
-    @auth.login_required
-    def update_task(task_id):
-        task = filter(lambda t: t['id'] == task_id, tasks)
-        if len(task) == 0:
-            abort(404)
-        if not request.json:
-            abort(400)
-        if 'title' in request.json and type(request.json['title']) != unicode:
-            abort(400)
-        if 'description' in request.json and type(request.json['description']) is not unicode:
-            abort(400)
-        if 'done' in request.json and type(request.json['done']) is not bool:
-            abort(400)
-        task[0]['title'] = request.json.get('title', task[0]['title'])
-        task[0]['description'] = request.json.get('description', task[0]['description'])
-        task[0]['done'] = request.json.get('done', task[0]['done'])
-        return jsonify( { 'task': make_public_task(task[0]) } )
+```python
+@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods = ['PUT'])
+@auth.login_required
+def update_task(task_id):
+    task = filter(lambda t: t['id'] == task_id, tasks)
+    if len(task) == 0:
+        abort(404)
+    if not request.json:
+        abort(400)
+    if 'title' in request.json and type(request.json['title']) != unicode:
+        abort(400)
+    if 'description' in request.json and type(request.json['description']) is not unicode:
+        abort(400)
+    if 'done' in request.json and type(request.json['done']) is not bool:
+        abort(400)
+    task[0]['title'] = request.json.get('title', task[0]['title'])
+    task[0]['description'] = request.json.get('description', task[0]['description'])
+    task[0]['done'] = request.json.get('done', task[0]['done'])
+    return jsonify( { 'task': make_public_task(task[0]) } )
+```
 
 在这里, 我必须确保请求中给出的数据在使用之前是有效，这样使得函数变得又臭又长。
 
@@ -665,27 +667,29 @@ Flask-RESTful 提供了一个更好的方式来处理数据验证，它叫做 Re
 
 首先，对于每一个资源需要定义参数以及怎样验证它们::
 
-    from flask.ext.restful import reqparse
+```python
+from flask.ext.restful import reqparse
 
-    class TaskListAPI(Resource):
-        def __init__(self):
-            self.reqparse = reqparse.RequestParser()
-            self.reqparse.add_argument('title', type = str, required = True,
-                help = 'No task title provided', location = 'json')
-            self.reqparse.add_argument('description', type = str, default = "", location = 'json')
-            super(TaskListAPI, self).__init__()
+class TaskListAPI(Resource):
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('title', type = str, required = True,
+            help = 'No task title provided', location = 'json')
+        self.reqparse.add_argument('description', type = str, default = "", location = 'json')
+        super(TaskListAPI, self).__init__()
 
-        # ...
+    # ...
 
-    class TaskAPI(Resource):
-        def __init__(self):
-            self.reqparse = reqparse.RequestParser()
-            self.reqparse.add_argument('title', type = str, location = 'json')
-            self.reqparse.add_argument('description', type = str, location = 'json')
-            self.reqparse.add_argument('done', type = bool, location = 'json')
-            super(TaskAPI, self).__init__()
+class TaskAPI(Resource):
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('title', type = str, location = 'json')
+        self.reqparse.add_argument('description', type = str, location = 'json')
+        self.reqparse.add_argument('done', type = bool, location = 'json')
+        super(TaskAPI, self).__init__()
 
-        # ...
+    # ...
+```
 
 在 TaskListAPI 资源中，POST 方法是唯一接收参数的。参数“标题”是必须的，因此我定义一个缺少“标题”的错误信息。当客户端缺少这个参数的时候，Flask-RESTful 将会把这个错误信息作为响应发送给客户端。“描述”字段是可选的，当缺少这个字段的时候，默认的空字符串将会被使用。一个有趣的方面就是 RequestParser 类默认情况下在 request.values 中查找参数，因此 location 可选参数必须被设置以表明请求过来的参数是 request.json 格式的。
 
@@ -693,16 +697,18 @@ TaskAPI 资源的参数处理是同样的方式，但是有少许不同。PUT �
 
 当请求解析器被初始化，解析和验证一个请求是很容易的。 例如，请注意 TaskAPI.put() 方法变的多么地简单::
 
-    def put(self, id):
-        task = filter(lambda t: t['id'] == id, tasks)
-        if len(task) == 0:
-            abort(404)
-        task = task[0]
-        args = self.reqparse.parse_args()
-        for k, v in args.iteritems():
-            if v != None:
-                task[k] = v
-        return jsonify( { 'task': make_public_task(task) } )
+```python
+def put(self, id):
+    task = filter(lambda t: t['id'] == id, tasks)
+    if len(task) == 0:
+        abort(404)
+    task = task[0]
+    args = self.reqparse.parse_args()
+    for k, v in args.iteritems():
+        if v != None:
+            task[k] = v
+    return jsonify( { 'task': make_public_task(task) } )
+```
 
 使用 Flask-RESTful 来处理验证的另一个好处就是没有必要单独地处理类似 HTTP 400 错误，Flask-RESTful 会来处理这些。
 
@@ -712,33 +718,41 @@ TaskAPI 资源的参数处理是同样的方式，但是有少许不同。PUT �
 
 原来设计的 REST 服务器使用 Flask 的 jsonify 函数来生成响应。Flask-RESTful 会自动地处理转换成 JSON 数据格式，因此下面的代码需要替换::
 
-    return jsonify( { 'task': make_public_task(task) } )
+```python
+return jsonify( { 'task': make_public_task(task) } )
+```
 
 现在需要写成这样::
 
-    return { 'task': make_public_task(task) }
+```python
+return { 'task': make_public_task(task) }
+```
 
 Flask-RESTful 也支持自定义状态码，如果有必要的话::
 
-    return { 'task': make_public_task(task) }, 201
+```python
+return { 'task': make_public_task(task) }, 201
+```
 
 Flask-RESTful 还有更多的功能。make_public_task 能够把来自原始服务器上的任务从内部形式包装成客户端想要的外部形式。最典型的就是把任务的 id 转成 uri。Flask-RESTful 就提供一个辅助函数能够很优雅地做到这样的转换，不仅仅能够把 id 转成 uri 并且能够转换其他的参数::
 
-    from flask.ext.restful import fields, marshal
+```python
+from flask.ext.restful import fields, marshal
 
-    task_fields = {
-        'title': fields.String,
-        'description': fields.String,
-        'done': fields.Boolean,
-        'uri': fields.Url('task')
-    }
+task_fields = {
+    'title': fields.String,
+    'description': fields.String,
+    'done': fields.Boolean,
+    'uri': fields.Url('task')
+}
 
-    class TaskAPI(Resource):
+class TaskAPI(Resource):
+    # ...
+
+    def put(self, id):
         # ...
-
-        def put(self, id):
-            # ...
-            return { 'task': marshal(task, task_fields) }
+        return { 'task': marshal(task, task_fields) }
+```
 
 task_fields 结构用于作为 marshal 函数的模板。fields.Uri 是一个用于生成一个 URL 的特定的参数。
 它需要的参数是 endpoint。
@@ -751,18 +765,20 @@ task_fields 结构用于作为 marshal 函数的模板。fields.Uri 是一个用
 
 因为 Resouce 类是继承自 Flask 的 MethodView，它能够通过定义 decorators 变量并且把装饰器赋予给它::
 
-    from flask.ext.httpauth import HTTPBasicAuth
-    # ...
-    auth = HTTPBasicAuth()
+```python
+from flask.ext.httpauth import HTTPBasicAuth
+# ...
+auth = HTTPBasicAuth()
+# ...
+
+class TaskAPI(Resource):
+    decorators = [auth.login_required]
     # ...
 
-    class TaskAPI(Resource):
-        decorators = [auth.login_required]
-        # ...
-
-    class TaskAPI(Resource):
-        decorators = [auth.login_required]
-        # ...
+class TaskAPI(Resource):
+    decorators = [auth.login_required]
+    # ...
+```
 
 使用 Flask 设计 RESTful 的认证
 ======================================
@@ -783,11 +799,13 @@ task_fields 结构用于作为 marshal 函数的模板。fields.Uri 是一个用
 
 用户的数据库模型是十分简单的。对于每一个用户，username 和 password_hash 将会被存储::
 
-    class User(db.Model):
-        __tablename__ = 'users'
-        id = db.Column(db.Integer, primary_key = True)
-        username = db.Column(db.String(32), index = True)
-        password_hash = db.Column(db.String(128))
+```python
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(32), index = True)
+    password_hash = db.Column(db.String(128))
+```
 
 出于安全原因，用户的原始密码将不被存储，密码在注册时被散列后存储到数据库中。使用散列密码的话，如果用户数据库不小心落入恶意攻击者的手里，他们也很难从散列中解析到真实的密码。
 
@@ -803,16 +821,18 @@ PassLib 提供了多种散列算法供选择。custom_app_context 是一个易�
 
 User 用户模型需要增加两个新方法来增加密码散列和密码验证功能::
 
-    from passlib.apps import custom_app_context as pwd_context
+```python
+from passlib.apps import custom_app_context as pwd_context
 
-        class User(db.Model):
-            # ...
+    class User(db.Model):
+        # ...
 
-            def hash_password(self, password):
-                self.password_hash = pwd_context.encrypt(password)
+        def hash_password(self, password):
+            self.password_hash = pwd_context.encrypt(password)
 
-            def verify_password(self, password):
-                return pwd_context.verify(password, self.password_hash)
+        def verify_password(self, password):
+            return pwd_context.verify(password, self.password_hash)
+```
 
 hash_password() 函数接受一个明文的密码作为参数并且存储明文密码的散列。当一个新用户注册到服务器或者当用户修改密码的时候，这个函数将被调用。
 
@@ -822,8 +842,6 @@ verify_password() 函数接受一个明文的密码作为参数并且当密码�
 
 散列算法是单向函数，这就是意味着它们能够用于根据密码生成散列，但是无法根据生成的散列逆向猜测出原密码。然而这些算法是具有确定性的，给定相同的输入它们总会得到相同的输出。PassLib 所有需要做的就是验证密码，通过使用注册时候同一个函数散列密码并且同存储在数据库中的散列值进行比较。
 
-
-
 用户注册
 ----------
 
@@ -831,19 +849,21 @@ verify_password() 函数接受一个明文的密码作为参数并且当密码�
 
 Flask 中的路由的实现如下所示::
 
-    @app.route('/api/users', methods = ['POST'])
-    def new_user():
-        username = request.json.get('username')
-        password = request.json.get('password')
-        if username is None or password is None:
-            abort(400) # missing arguments
-        if User.query.filter_by(username = username).first() is not None:
-            abort(400) # existing user
-        user = User(username = username)
-        user.hash_password(password)
-        db.session.add(user)
-        db.session.commit()
-        return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)}
+```python
+@app.route('/api/users', methods = ['POST'])
+def new_user():
+    username = request.json.get('username')
+    password = request.json.get('password')
+    if username is None or password is None:
+        abort(400) # missing arguments
+    if User.query.filter_by(username = username).first() is not None:
+        abort(400) # existing user
+    user = User(username = username)
+    user.hash_password(password)
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)}
+```
 
 这个函数是十分简单地。参数 username 和 password 是从请求中携带的 JSON 数据中获取，接着验证它们。
 
@@ -855,17 +875,19 @@ Flask 中的路由的实现如下所示::
 
 这里是一个用户注册的请求，发送自 curl::
 
-    $ curl -i -X POST -H "Content-Type: application/json" -d '{"username":"miguel","password":"python"}' http://127.0.0.1:5000/api/users
-    HTTP/1.0 201 CREATED
-    Content-Type: application/json
-    Content-Length: 27
-    Location: http://127.0.0.1:5000/api/users/1
-    Server: Werkzeug/0.9.4 Python/2.7.3
-    Date: Thu, 28 Nov 2013 19:56:39 GMT
+```shell
+$ curl -i -X POST -H "Content-Type: application/json" -d '{"username":"miguel","password":"python"}' http://127.0.0.1:5000/api/users
+HTTP/1.0 201 CREATED
+Content-Type: application/json
+Content-Length: 27
+Location: http://127.0.0.1:5000/api/users/1
+Server: Werkzeug/0.9.4 Python/2.7.3
+Date: Thu, 28 Nov 2013 19:56:39 GMT
 
-    {
-      "username": "miguel"
-    }
+{
+  "username": "miguel"
+}
+```
 
 需要注意地是在真实的应用中这里可能会使用安全的的 HTTP (譬如：HTTPS)。如果用户登录的凭证是通过明文在网络传输的话，任何对 API 的保护措施是毫无意义的。
 
@@ -879,13 +901,15 @@ Flask 中的路由的实现如下所示::
 
 使用 Flask-HTTPAuth，通过添加 login_required 装饰器可以要求相应的路由必须进行认证::
 
-    from flask.ext.httpauth import HTTPBasicAuth
-    auth = HTTPBasicAuth()
+```python
+from flask.ext.httpauth import HTTPBasicAuth
+auth = HTTPBasicAuth()
 
-    @app.route('/api/resource')
-    @auth.login_required
-    def get_resource():
-        return jsonify({ 'data': 'Hello, %s!' % g.user.username })
+@app.route('/api/resource')
+@auth.login_required
+def get_resource():
+    return jsonify({ 'data': 'Hello, %s!' % g.user.username })
+```
 
 但是，Flask-HTTPAuth 需要给予更多的信息来验证用户的认证，当然 Flask-HTTPAuth 有着许多的选项，它取决于应用程序实现的安全级别。
 
@@ -893,40 +917,46 @@ Flask 中的路由的实现如下所示::
 
 verify_password 回调函数的实现如下::
 
-    @auth.verify_password
-    def verify_password(username, password):
-        user = User.query.filter_by(username = username).first()
-        if not user or not user.verify_password(password):
-            return False
-        g.user = user
-        return True
+```python
+@auth.verify_password
+def verify_password(username, password):
+    user = User.query.filter_by(username = username).first()
+    if not user or not user.verify_password(password):
+        return False
+    g.user = user
+    return True
+```
 
 这个函数将会根据 username 找到用户，并且使用 verify_password() 方法验证密码。如果认证通过的话，用户对象将会被存储在 Flask 的 g 对象中，这样视图就能使用它。
 
 这里是用 curl 请求只允许注册用户获取的保护资源::
 
-    $ curl -u miguel:python -i -X GET http://127.0.0.1:5000/api/resource
-    HTTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 30
-    Server: Werkzeug/0.9.4 Python/2.7.3
-    Date: Thu, 28 Nov 2013 20:02:25 GMT
+```shell
+$ curl -u miguel:python -i -X GET http://127.0.0.1:5000/api/resource
+HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 30
+Server: Werkzeug/0.9.4 Python/2.7.3
+Date: Thu, 28 Nov 2013 20:02:25 GMT
 
-    {
-      "data": "Hello, miguel!"
-    }
+{
+  "data": "Hello, miguel!"
+}
+```
 
 如果登录失败的话，会得到下面的内容::
 
-    $ curl -u miguel:ruby -i -X GET http://127.0.0.1:5000/api/resource
-    HTTP/1.0 401 UNAUTHORIZED
-    Content-Type: text/html; charset=utf-8
-    Content-Length: 19
-    WWW-Authenticate: Basic realm="Authentication Required"
-    Server: Werkzeug/0.9.4 Python/2.7.3
-    Date: Thu, 28 Nov 2013 20:03:18 GMT
+```shell
+$ curl -u miguel:ruby -i -X GET http://127.0.0.1:5000/api/resource
+HTTP/1.0 401 UNAUTHORIZED
+Content-Type: text/html; charset=utf-8
+Content-Length: 19
+WWW-Authenticate: Basic realm="Authentication Required"
+Server: Werkzeug/0.9.4 Python/2.7.3
+Date: Thu, 28 Nov 2013 20:03:18 GMT
 
-    Unauthorized Access
+Unauthorized Access
+```
 
 这里我再次重申在实际的应用中，请使用安全的 HTTP。
 
@@ -950,26 +980,28 @@ Flask 使用类似的方式处理 cookies 的。这个实现依赖于一个叫�
 
 令牌的生成以及验证将会被添加到 User 模型中，其具体实现如下::
 
-    from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+```python
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
-    class User(db.Model):
-        # ...
+class User(db.Model):
+    # ...
 
-        def generate_auth_token(self, expiration = 600):
-            s = Serializer(app.config['SECRET_KEY'], expires_in = expiration)
-            return s.dumps({ 'id': self.id })
+    def generate_auth_token(self, expiration = 600):
+        s = Serializer(app.config['SECRET_KEY'], expires_in = expiration)
+        return s.dumps({ 'id': self.id })
 
-        @staticmethod
-        def verify_auth_token(token):
-            s = Serializer(app.config['SECRET_KEY'])
-            try:
-                data = s.loads(token)
-            except SignatureExpired:
-                return None # valid token, but expired
-            except BadSignature:
-                return None # invalid token
-            user = User.query.get(data['id'])
-            return user
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None # valid token, but expired
+        except BadSignature:
+            return None # invalid token
+        user = User.query.get(data['id'])
+        return user
+```
 
 generate_auth_token() 方法生成一个以用户 id 值为值，'id' 为关键字的字典的加密令牌。令牌中同时加入了一个过期时间，默认为十分钟(600 秒)。
 
@@ -977,11 +1009,13 @@ generate_auth_token() 方法生成一个以用户 id 值为值，'id' 为关键�
 
 API 需要一个获取令牌的新函数，这样客户端才能申请到令牌::
 
-    @app.route('/api/token')
-    @auth.login_required
-    def get_auth_token():
-        token = g.user.generate_auth_token()
-        return jsonify({ 'token': token.decode('ascii') })
+```python
+@app.route('/api/token')
+@auth.login_required
+def get_auth_token():
+    token = g.user.generate_auth_token()
+    return jsonify({ 'token': token.decode('ascii') })
+```
 
 注意：这个函数是使用了 auth.login_required 装饰器，也就是说需要提供 username 和 password。
 
@@ -991,45 +1025,51 @@ HTTP 基本认证方式不特别要求 usernames 和 passwords 用于认证，�
 
 这就意味着服务器需要同时处理 username 和 password 作为认证，以及令牌作为 username 的认证方式。verify_password 回调函数需要同时支持这两种方式::
 
-    @auth.verify_password
-    def verify_password(username_or_token, password):
-        # first try to authenticate by token
-        user = User.verify_auth_token(username_or_token)
-        if not user:
-            # try to authenticate with username/password
-            user = User.query.filter_by(username = username_or_token).first()
-            if not user or not user.verify_password(password):
-                return False
-        g.user = user
-        return True
+```python
+@auth.verify_password
+def verify_password(username_or_token, password):
+    # first try to authenticate by token
+    user = User.verify_auth_token(username_or_token)
+    if not user:
+        # try to authenticate with username/password
+        user = User.query.filter_by(username = username_or_token).first()
+        if not user or not user.verify_password(password):
+            return False
+    g.user = user
+    return True
+```
 
 新版的 verify_password 回调函数会尝试认证两次。首先它会把 username 参数作为令牌进行认证。如果没有验证通过的话，就会像基于密码认证的一样，验证 username 和 password。
 
 如下的 curl 请求能够获取一个认证的令牌::
 
-    $ curl -u miguel:python -i -X GET http://127.0.0.1:5000/api/token
-    HTTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 139
-    Server: Werkzeug/0.9.4 Python/2.7.3
-    Date: Thu, 28 Nov 2013 20:04:15 GMT
+```shell
+$ curl -u miguel:python -i -X GET http://127.0.0.1:5000/api/token
+HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 139
+Server: Werkzeug/0.9.4 Python/2.7.3
+Date: Thu, 28 Nov 2013 20:04:15 GMT
 
-    {
-      "token": "eyJhbGciOiJIUzI1NiIsImV4cCI6MTM4NTY2OTY1NSwiaWF0IjoxMzg1NjY5MDU1fQ.eyJpZCI6MX0.XbOEFJkhjHJ5uRINh2JA1BPzXjSohKYDRT472wGOvjc"
-    }
+{
+  "token": "eyJhbGciOiJIUzI1NiIsImV4cCI6MTM4NTY2OTY1NSwiaWF0IjoxMzg1NjY5MDU1fQ.eyJpZCI6MX0.XbOEFJkhjHJ5uRINh2JA1BPzXjSohKYDRT472wGOvjc"
+}
+```
 
 现在可以使用令牌获取资源::
 
-    $ curl -u eyJhbGciOiJIUzI1NiIsImV4cCI6MTM4NTY2OTY1NSwiaWF0IjoxMzg1NjY5MDU1fQ.eyJpZCI6MX0.XbOEFJkhjHJ5uRINh2JA1BPzXjSohKYDRT472wGOvjc:unused -i -X GET http://127.0.0.1:5000/api/resource
-    HTTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 30
-    Server: Werkzeug/0.9.4 Python/2.7.3
-    Date: Thu, 28 Nov 2013 20:05:08 GMT
+```shell
+$ curl -u eyJhbGciOiJIUzI1NiIsImV4cCI6MTM4NTY2OTY1NSwiaWF0IjoxMzg1NjY5MDU1fQ.eyJpZCI6MX0.XbOEFJkhjHJ5uRINh2JA1BPzXjSohKYDRT472wGOvjc:unused -i -X GET http://127.0.0.1:5000/api/resource
+HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 30
+Server: Werkzeug/0.9.4 Python/2.7.3
+Date: Thu, 28 Nov 2013 20:05:08 GMT
 
-    {
-      "data": "Hello, miguel!"
-    }
+{
+  "data": "Hello, miguel!"
+}
+```
 
 需要注意的是这里并没有使用密码。
 
@@ -1042,3 +1082,4 @@ OAuth 认证
 那么什么是 OAuth？
 
 OAuth 可以有很多的含义。最通常就是一个应用程序允许其它应用程序的用户的接入或者使用服务，但是用户必须使用应用程序提供的登录凭证。我建议阅读者可以浏览 `OAuth <http://en.wikipedia.org/wiki/OAuth>`_ 了解更多知识。
+

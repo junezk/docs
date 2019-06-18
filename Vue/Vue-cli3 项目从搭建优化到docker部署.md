@@ -442,7 +442,7 @@ yarn add axios
 
 分别输入不同的地址， 比如 `dev` 就写 `dev` 的api地址、 `test` 就写 `test` 的api地址
 
-```
+```javascript
 # // .env
 NODE_ENV = "development"
 BASE_URL = "https://easy-mock.com/mock/5c4c50b9888ef15de01bec2c/api"
@@ -450,7 +450,7 @@ BASE_URL = "https://easy-mock.com/mock/5c4c50b9888ef15de01bec2c/api"
 
 接着在根目录中新建一个 `vue.config.js`
 
-```
+```javascript
 // vue.config.js
 module.exports = {
   chainWebpack: config => {
@@ -579,7 +579,7 @@ export default service
 
 在响应拦截中添加处理逻辑
 
-```
+```javascript
 service.interceptors.response.use(response => {
   const responseCode = response.status
   // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
@@ -610,7 +610,7 @@ service.interceptors.response.use(response => {
 
 ### 5.4 封装图片上传
 
-```
+```javascript
 // src/api/index.js
 export const uploadFile = formData => {
   const res = service.request({
@@ -625,7 +625,7 @@ export const uploadFile = formData => {
 
 调用
 
-```
+```javascript
 async uploadFile (e) {
   const file = document.getElementById('file').files[0]
   const formdata = new FormData()
@@ -670,7 +670,7 @@ service.interceptors.response.use(response => {
 
 假设有这样一个场景，我们通过 `vuex` 封装了获取新闻列表的 `function`
 
-```
+```javascript
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { getNewsList } from '../api/news'
@@ -703,7 +703,7 @@ export default new Vuex.Store({
 
 然后在新闻列表页，我们通过 `mapAction`、`mapGetters`来调用`Action`和`getters` 我们需要写上这些代码
 
-```
+```javascript
 import { mapActions, mapGetters } from 'vuex'
 
 computed: {
@@ -726,7 +726,7 @@ methods: {
 
 - 封装 news-mixin.js 在 `src`下创建一个`mixins`目录，用来管理所有的mixins 新建一个`news-mixin.js`
 
-```
+```javascript
 import { mapActions, mapGetters } from 'vuex'
 export default {
   computed: {
@@ -742,7 +742,7 @@ export default {
 
 需求一改的话，也只需要修改这个`mixin`文件
 
-```
+```javascript
 // news/index.vue
 import Vue from 'vue'
 import newsMixin from '@/mixins/news-mixin'
@@ -761,7 +761,7 @@ export default {
 
 ### 6.2 扩展
 
-除了封装 `vuex` 的公用方法，其实还有很多的东西也能做封装。例如：`分页对象`,`表格数据`,`公用方法`、等等就不一一举例了。可以看[github](https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Flentoo%2Fvue-cli3-project)
+除了封装 `vuex` 的公用方法，其实还有很多的东西也能做封装。例如：`分页对象`,`表格数据`,`公用方法`、等等就不一一举例了。可以看 [github](https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Flentoo%2Fvue-cli3-project) 。
 
 在多个地方经常使用，就可以考虑封装成`mixin`，不过请写好注释哦。不然就会有人在背后骂你了！！你懂的~~
 
@@ -771,7 +771,7 @@ export default {
 
 - 安装`compression-webpack-plugin`插件
 
-```
+```bash
 npm install compression-webpack-plugin --save-dev
 // or
 yarn add compression-webpack-plugin --dev
@@ -779,7 +779,7 @@ yarn add compression-webpack-plugin --dev
 
 - 在 vue.config.js 中添加配置
 
-```
+```js
 // vue.config.js
 const CompressionPlugin = require('compression-webpack-plugin')
 module.exports = {
@@ -935,7 +935,7 @@ module.exports = {
 
 1. 安装需要的插件
 
-```
+```bash
 npm install qiniu glob mime --save-dev
 ```
 
@@ -1028,7 +1028,7 @@ function getFileKey (pre, file) {
 
 修改`vue.config.js`的配置信息，让其`publicPath`指向我们`cdn`的域名
 
-```
+```javascript
 const IS_PROD = process.env.NODE_ENV === 'production'
 const cdnDomian = 'http://ply4cszel.bkt.clouddn.com'
 module.exports = {
@@ -1092,7 +1092,7 @@ yum install docker-compose
 
 ### 8.2 编写docker-compose.yaml
 
-```
+```yaml
 version: '2.1'
 services:
   nginx:
@@ -1110,7 +1110,7 @@ services:
 
 ### 8.3 编写 nginx.conf 配置
 
-```
+```nginx
 #user  nobody;
 
 worker_processes  2;
