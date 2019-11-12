@@ -351,9 +351,7 @@ $: docker inspect <container-id> -f '{{.GraphDriver.Data.LowerDir}}'
 
 ```dockerfile
 FROM debian:stable
-
 WORKDIR /var/www
-
 RUN apt-get update && \
     apt-get -y --no-install-recommends install curl \
         ca-certificates && \

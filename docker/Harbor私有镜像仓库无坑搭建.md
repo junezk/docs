@@ -108,12 +108,10 @@ grub2-mkconfig -o /boot/grub2/grub.cfg && reboot
 ```
 wget https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-17.03.2.ce-1.el7.centos.x86_64.rpm
 wget https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-selinux-17.03.2.ce-1.el7.centos.noarch.rpm
-复制代码
+
 ➜ yum install docker-ce-selinux-17.03.2.ce-1.el7.centos.noarch.rpm -y
 ➜ yum install docker-ce-17.03.2.ce-1.el7.centos.x86_64.rpm -y
 ```
-
-``
 
 ```
 设置开机启动并启动docker

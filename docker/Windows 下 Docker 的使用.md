@@ -24,3 +24,32 @@
   --name 给容器起名字
 
   -d 以守护进程方式运行
+
+## Docker debian镜像加速命令：
+
+```
+#更新apt-get源 使用163的源
+RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak \
+    echo "deb http://mirrors.163.com/debian/ jessie main non-free contrib" >/etc/apt/sources.list && \
+    echo "deb http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources.list && \
+    echo "deb-src http://mirrors.163.com/debian/ jessie main non-free contrib" >>/etc/apt/sources.list && \
+    echo "deb-src http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources.list
+```
+
+Docker ubuntu镜像加速命令：
+
+```
+FROM ubuntu:latest
+RUN  sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
+&& apt-get clean \
+&& apt-get update
+```
+
+
+
+## pip install 使用豆瓣源加速
+
+```
+ pip install -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com xxxx
+```
+
