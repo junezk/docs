@@ -53,3 +53,9 @@ RUN  sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list 
  pip install -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com xxxx
 ```
 
+## Python.h:11:10: fatal error: limits.h: No such file or directory
+
+```
+apk add musl-dev
+```
+

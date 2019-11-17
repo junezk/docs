@@ -94,7 +94,7 @@ python manage.py runserver 0.0.0.0:30000
 
 我着实花了点时间才解决这个问题————`django-mama-cas` 默认使用的是 `django.auth` 模块 `User`，使用 `django-admin` 创建超级用户，该用户也就可以用于登录 CAS ：
 
-```
+```bash
 python manage.py createsuperuser
 ```
 
