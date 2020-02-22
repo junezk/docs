@@ -8,11 +8,11 @@
 
 1. 一键运行项目：
 
-![img](https://user-gold-cdn.xitu.io/2019/5/16/16abffa1c283d641?imageslim)
+![img](借助Docker，在win10下编码，一键在Linux下测试.assets/16abffa1c283d641)
 
 1. 模拟修改项目后的一键重新部署、测试：
 
-![img](https://user-gold-cdn.xitu.io/2019/5/16/16abffa48cfa2d5e?imageslim)
+![img](借助Docker，在win10下编码，一键在Linux下测试.assets/16abffa48cfa2d5e)
 
 ### 1. Docker for Windows的安装与设置
 
@@ -39,7 +39,6 @@
 
 ```
 [Error] Unable to mount C drive: C:\Program Files\Docker\Docker\Resources\bin\docker.exe: Error response from daemon: OCI runtime create failed: container_linux.go:344: starting container process caused "exec: \"/usr/bin/nsenter1\": stat /usr/bin/nsenter1: no such file or directory": unknown.
-复制代码
 ```
 
 ​	网络上关于该问题的解决方案主要分为以下几种：
@@ -73,7 +72,6 @@
     `-- supervisor				# 放置示例项目的运行配置文件	
         |-- test_demo1.conf	        # 记录了示例项目1的启动信息，通过软件supervisor启动、监控
         `-- test_demo2.conf		# 记录了示例项目2的启动信息，通过软件supervisor启动、监控
-复制代码
 ```
 
 以上就是我们这次实验的所有文件的目录树示意图，将相关项目都放在"D:\pc_share\apps"下，为了方便演示，在这里创建了两个基于tornado的Web项目`test_demo1`，`test_demo1`，每个项目中只包含了一个启动文件`app.py`：
@@ -95,7 +93,6 @@ if __name__ == "__main__":
     app = make_app()
     app.listen(8888)					# 监听8888端口，示例项目2的监听改为另一个端口，否则有一个将由于端口占用无法成功启动
     tornado.ioloop.IOLoop.current().start()		# 开启Web服务
-复制代码
 ```
 
 如上所示是一段十分简单的Web程序，该程序监听'8888'端口，如果访问"http:\\localhost:8888"就可以得到回复：**"Hello, from test_demo_1"**。
@@ -170,7 +167,7 @@ docker build -t centos_python2:1.0 -f DockerFile --target=centos_python2 .
 
 ##### 2.2.2 配置上层运行环境
 
-![img](https://user-gold-cdn.xitu.io/2019/5/16/16abff777a285bef?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+![img](借助Docker，在win10下编码，一键在Linux下测试.assets/16abff777a285bef)
 
 下层运行环境提供了一个较为通用的基于Centos的python开发平台，是所有python项目运行的通用基础，在后续的开发、测试过程中基本不需要修改。但是，不同的python项目可能会面临着不同的问题，主要可以分为以下几项：
 
@@ -347,21 +344,19 @@ docker run [options] [image_id]
 
 1. 在`vscode`的扩展插件商店中搜索"docker"并安装该插件，重启后会发现`vscode`的侧边栏多出了一个docker的图标：
 
-![img](https://user-gold-cdn.xitu.io/2019/5/16/16abff94c362363f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+![img](借助Docker，在win10下编码，一键在Linux下测试.assets/16abff94c362363f)
 
 如上图中所示，这个插件可以直接显示出本机中存在的镜像、容器和仓库信息。由图可以看到我们之前创建的所有镜像。
 
 1. 选择我们的镜像`centos_python2_supervisor:1.0`，右击并在选项列表中选择`Run`，会发现我们的容器列表中新增了一个运行的容器：
 
-
-
-![img](https://user-gold-cdn.xitu.io/2019/5/16/16abff97aa5a3d49?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+![img](借助Docker，在win10下编码，一键在Linux下测试.assets/16abff97aa5a3d49)
 
 1. 如果我们修改了代码后需要重新测试的话，选择容器右击选择`Restart Container`，就可以重启我们的容器，重新启动我们的项目：
 
-![img](https://user-gold-cdn.xitu.io/2019/5/16/16abff9af13c87dc?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+![img](借助Docker，在win10下编码，一键在Linux下测试.assets/16abff9af13c87dc)
 
 所以，当我们通过编写Dockerfile、构建镜像后，基本的运行环境就搭建成功了。之后每次需要测试修改后的代码时只需要在docker的插件界面中选中对应容器选择重启就可以了。如果测试想要了解项目运行更详细的信息，右击选择`Attach Shell`就可以进入容器中通过熟悉的终端查看相关日志：
 
-![img](https://user-gold-cdn.xitu.io/2019/5/16/16abff9e50c7a086?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+![img](借助Docker，在win10下编码，一键在Linux下测试.assets/16abff9e50c7a086)
 
