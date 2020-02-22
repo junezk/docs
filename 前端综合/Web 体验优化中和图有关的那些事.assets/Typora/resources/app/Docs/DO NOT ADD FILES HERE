@@ -1,1 +1,0 @@
-This folder will be replaced / removed during update / uninstall. Do not write your files here.

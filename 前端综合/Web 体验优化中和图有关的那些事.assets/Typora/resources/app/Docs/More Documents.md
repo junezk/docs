@@ -1,3 +1,0 @@
-# More Documents...
-
-See <http://support.typora.io>

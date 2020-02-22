@@ -50,7 +50,7 @@ Celery 的定时任务使用的是类似 `crontab` 的语法，因此在用户�
 
 创建定时策略代码如下：
 
-```
+```python
 from django_celery_beat.models import CrontabSchedule, PeriodicTask
 >>> schedule, _ = CrontabSchedule.objects.get_or_create(
 ...     minute='30',
@@ -65,20 +65,20 @@ from django_celery_beat.models import CrontabSchedule, PeriodicTask
 
 定时任务可以依赖不同的定时策略，例如 crontab, interval 等，创建时指定 `schedule` 即可。以 crontab 定时任务为例：
 
-```
->>> import json
->>> from datetime import datetime, timedelta
+```python
+import json
+from datetime import datetime, timedelta
 
->>> PeriodicTask.objects.create(
-...     crontab=schedule,                  # we created this above.
-...     name='Importing contacts',          # simply describes this periodic task.
-...     task='proj.tasks.import_contacts',  # name of task.
-...     args=json.dumps(['arg1', 'arg2']),
-...     kwargs=json.dumps({
-...        'be_careful': True,
-...     }),
-...     expires=datetime.utcnow() + timedelta(seconds=30)
-... )
+PeriodicTask.objects.create(
+    crontab=schedule,                  # we created this above.
+    name='Importing contacts',          # simply describes this periodic task.
+    task='proj.tasks.import_contacts',  # name of task.
+    args=json.dumps(['arg1', 'arg2']),
+    kwargs=json.dumps({
+    	'be_careful': True,
+    }),
+    expires=datetime.utcnow() + timedelta(seconds=30)
+)
 ```
 
 其中 `name` 为定时任务的名称，每个任务名必须唯一；`task` 为需要执行的 celery 任务。加上定时策略调度器，这三个是一个定时任务所必须的属性。
@@ -91,7 +91,7 @@ from django_celery_beat.models import CrontabSchedule, PeriodicTask
 
 *settings.py*
 
-```
+```python
 INSTALLED_APPS = [
     ...
     'django_celery_beat'
@@ -115,7 +115,7 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 *settings.py*
 
-```
+```python
 # 设置 Django 大部分应用通用的时区
 TIME_ZONE = 'Asia/Shanghai'
 # 关闭 UTC
@@ -149,7 +149,7 @@ python manage.py shell
 
 查看 `CrontabSchedule` 模型的源码，找到数据库中 `timezone` 字段的属性：
 
-```
+```python
 class CrontabSchedule(models.Model):
     ...
     timezone = timezone_field.TimeZoneField(
@@ -162,16 +162,16 @@ class CrontabSchedule(models.Model):
 
 由于我们在创建 `CrontabSchedule` 实例时并未指定 `timezone`，因此在创建任务时，添加该字段的配置即可：
 
-```
+```python
 from django_celery_beat.models import CrontabSchedule
->>> schedule, _ = CrontabSchedule.objects.get_or_create(
-...     minute='30',
-...     hour='*',
-...     day_of_week='*',
-...     day_of_month='*',
-...     month_of_year='*',
-...     timezone='Asia/Shanghai'
-... )
+schedule, _ = CrontabSchedule.objects.get_or_create(
+    minute='30',
+    hour='*',
+    day_of_week='*',
+    day_of_month='*',
+    month_of_year='*',
+    timezone='Asia/Shanghai'
+)
 ```
 
 ### *业务前后端设计
@@ -195,7 +195,7 @@ from django_celery_beat.models import CrontabSchedule
 
 假设对于我的业务来说，前端需要的任务数据字段为：
 
-```
+```json
 {
     "task_id": 1,
     "is_periodic_task": true,
@@ -214,7 +214,7 @@ ER 模型如图：
 
 因此可以新建一个方法：
 
-```
+```python
 def get_crontab_str(contab) -> str:
     """
     获取前端配置需要的 5 项值
@@ -240,11 +240,11 @@ def get_crontab_str(contab) -> str:
 
 对应流程图如下：
 
-1:
+1：
 
  ![img](Django - 定时任务模块设计与实践.assets/16c1d87f48378763) 
 
-2, 3:
+2，3：
 
  ![img](Django - 定时任务模块设计与实践.assets/16c1d88a7b797bea) 
 
@@ -254,9 +254,9 @@ def get_crontab_str(contab) -> str:
 
 修改 `PeriodicTask.objects.enabled` 为 `False/0` 即可
 
-```
->>> periodic_task.enabled = False
->>> periodic_task.save()
+```python
+periodic_task.enabled = False
+periodic_task.save()
 ```
 
 ## 总结
