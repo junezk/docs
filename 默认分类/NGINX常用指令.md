@@ -1,4 +1,4 @@
-# [NGINX常用指令](https://segmentfault.com/a/1190000021711621)
+# [NGINX配置文件常用指令](https://segmentfault.com/a/1190000021711621)
 
 
 
@@ -367,7 +367,7 @@ location /test4 {
     proxy_pass http://127.0.0.1:7001;
     # /test4 -> /test4
     # /test4/a -> /test4/a
-    # /test4a -> /xxxx4a
+    # /test4a -> /test4a
 }
 location /test5/ {
     proxy_pass http://127.0.0.1:7001/;

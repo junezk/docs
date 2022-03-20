@@ -6,11 +6,7 @@ VS Code是一个年轻的编辑器，但是确实是非常犀利。通过本篇�
 
 ## **使用 Visual Studio Code玩转Docker**
 
-Visual Studio是我们熟知的宇宙第一IDE，而Visual Studio Code（简称VS Code）则是微软推出的开源的跨平台编辑器，自从出世，一直是战斗力爆表——短短4年，就已拔得头筹，并且得到了众多开发者的拥护。如下图所示，以下是Stack Overflow 的 2018 年开发者最受欢迎的开发工具调查结果：
-
-![Docker最全教程之使用 Visual Studio Code玩转Docker（二十一）](Docker最全教程之使用 Visual Studio Code玩转Docker（二十一）.assets/b324f7ae664b4c13978ffb2499c08076.jpg)
-
-在Stack Overflow 的 2018 年开发者调查中，VSCode 成为了最受欢迎的开发工具
+Visual Studio是我们熟知的宇宙第一IDE，而Visual Studio Code（简称VS Code）则是微软推出的开源的跨平台编辑器，自从出世，一直是战斗力爆表——短短4年，就已拔得头筹，并且得到了众多开发者的拥护。
 
 目前VisualStudio Code已经拥有了超过一万个插件，插件市场生态是极其丰富。同时其对所有的编程语言都非常友好（体验很不错），包括Docker。接下来，我们就说说Visual Studio Code对Docker的一些支持。
 

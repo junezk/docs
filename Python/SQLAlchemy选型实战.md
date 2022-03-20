@@ -19,8 +19,6 @@ SQLAlchemy是一个基于Python实现的ORM框架。该框架建立在 DB API之
 pip3 install sqlalchemy
 ```
 
-[图片上传失败...(image-af7aa3-1522052675628)]
-
 组成部分：
 
 - Engine：框架的引擎
@@ -47,11 +45,31 @@ cx_Oracle
 更多：http://docs.sqlalchemy.org/en/latest/dialects/index.html
 ```
 
+Sqlserver 可以使用DSN、Hostname、Pyodbc String等方式进行连接：
+
+DSN：
+
+```
+mssql+pyodbc://<user>:<password>@<dsnname>
+```
+
+Hostname：
+
+```
+mssql+pyodbc://<user>:<password>@<host>[:<port>]/<dbname>
+```
+
+Pyodbc String：
+
+```
+driver=SQL+Server+Native+Client+13.0
+```
+
 ## 使用
 
 ### 执行原生SQL
 
-```
+```python
 from sqlalchemy import create_engine
 # 首先创建引擎
 engine = create_engine(
@@ -65,7 +83,7 @@ engine = create_engine(
 
 **方式一**
 
-```
+```python
 conn = engine.raw_connection()
 cursor = conn.cursor()
 cursor.execute('select * from USER WHERE id > %s', (10,))
@@ -76,7 +94,7 @@ conn.close()
 
 **方式二**
 
-```
+```python
 conn = engine.contextual_connect()
 with conn:
     cursor = conn.execute('select * from USER WHERE id > %s', (10,))
@@ -85,7 +103,7 @@ with conn:
 
 **方式三**
 
-```
+```python
 cursor = engine.execute('select * from USER WHERE id > %s', (10,))
 data = cursor.fetchall()
 cursor.close()
@@ -97,7 +115,7 @@ cursor.close()
 
 a.创建数据表
 
-```
+```python
 # 创建单表
 import datetime
 from sqlalchemy import create_engine
@@ -202,7 +220,7 @@ b.操作数据表
 
 models.py
 
-```
+```python
 import datetime
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, UniqueConstraint, Index
 from sqlalchemy.ext.declarative import declarative_base
@@ -272,7 +290,7 @@ class Server(Base):
 
 单表操作：
 
-```
+```python
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from models import Users
@@ -295,7 +313,7 @@ session.close()
 
 多线程执行示例：
 
-```
+```python
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from models import Users
@@ -321,7 +339,7 @@ for i in range(10):
 
 基本增删改查示例：
 
-```
+```python
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import time
@@ -382,7 +400,7 @@ session.close()
 
 常用操作：
 
-```
+```python
 #　条件
 ret = session.query(Users).filter_by(name='alex').all()
 ret = session.query(Users).filter(Users.id > 1, Users.name == 'eric').all()
@@ -445,7 +463,7 @@ ret = q1.union_all(q2).all()
 
 原生sql语句：
 
-```
+```python
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import time
@@ -478,7 +496,7 @@ session.close()
 
 基于relationship操作ForeignKey
 
-```
+```python
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import time
@@ -533,7 +551,7 @@ session.close()
 
 基于relationship操作m2m
 
-```
+```python
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import time

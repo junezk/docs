@@ -1,7 +1,5 @@
 # [Vue组件开发最佳实践](https://www.cnblogs.com/ytu2010dt/p/6523586.html)
 
-
-
 看了老外的一篇关于[组件开发的建议](https://pablohpsilva.github.io/vuejs-component-style-guide/#/)(强烈建议阅读英文原版)，感觉不错翻译一下加深理解。
 
 这篇文章制定一个统一的规则来开发你的vue程序，以至于达到一下目的。 
@@ -73,40 +71,40 @@ vue的行内式表达式都是js。当着这些js很有效，但是也很复杂�
 
 把复杂的语法移动到methods或者计算属性中
 
-    <!-- recommended -->
-    <template>
-        <h1>
-            {{ `${year}-${month}` }}
-        </h1>
-    </template>
-    <script type="text/javascript">
-      export default {
-        computed: {
-          month() {
-            return this.twoDigits((new Date()).getUTCMonth() + 1);
-          },
-          year() {
-            return (new Date()).getUTCFullYear();
-          }
-        },
-        methods: {
-          twoDigits(num) {
-            return ('0' + num).slice(-2);
-          }
-        },
-      };
-    </script>
-    
-    <!-- avoid -->
-    <template>
-        <h1>
-            {{ `${(new Date()).getUTCFullYear()}-${('0' + ((new Date()).getUTCMonth()+1)).slice(-2)}` }}
-        </h1>
-    </template>
+```vue
+<!-- recommended -->
+<template>
+    <h1>
+        {{ `${year}-${month}` }}
+    </h1>
+</template>
+<script type="text/javascript">
+  export default {
+    computed: {
+      month() {
+        return this.twoDigits((new Date()).getUTCMonth() + 1);
+      },
+      year() {
+        return (new Date()).getUTCFullYear();
+      }
+    },
+    methods: {
+      twoDigits(num) {
+        return ('0' + num).slice(-2);
+      }
+    },
+  };
+</script>
 
+<!-- avoid -->
+<template>
+    <h1>
+        {{ `${(new Date()).getUTCFullYear()}-${('0' + ((new Date()).getUTCMonth()+1)).slice(-2)}` }}
+    </h1>
+</template>
+```
 
-保证组件的props简单
-------------
+## 保证组件的props简单
 
 尽管vue支持通过props传递复杂的object，但是你要尽量保持props传递的数据简单,尽量只传递基本数据类型(strings, numbers, booleans)
 
@@ -151,7 +149,7 @@ vue 组件中props就是api,健壮且可预测的api让别人更容易使用你�
 * 属性设置默认值
 * 属性设置数据类型校验
 * 使用组件之前检查props是否存在
-
+```vue
     <template>
       <input type="range" v-model="value" :max="max" :min="min">
     </template>
@@ -173,7 +171,7 @@ vue 组件中props就是api,健壮且可预测的api让别人更容易使用你�
         },
       };
     </script>
-
+```
 将组件设定为this
 ----------
 
@@ -291,7 +289,7 @@ vue 支持组件通过 `this.$refs`来获得组件或者dom元素的上下文，
 * 以设计好的api和组件独立性为目的来更新你的组件
 * 当props和自定义事件实在达不到目的再用`this.$refs`
 * 当元素不能用数据绑定或者指令操作时，用`this.$refs`是比jquery和`document.getElement*`好一些的选择
-
+```vue
     <!-- good, no need for ref -->
     <range :max="max"
       :min="min"
@@ -304,16 +302,17 @@ vue 支持组件通过 `this.$refs`来获得组件或者dom元素的上下文，
       <h4>Basic Modal</h4>
       <button class="primary" @click="$refs.basicModal.close()">Close</button>
     </modal>
-    <button @click="​$refs.basicModal.open()">Open modal</button>
+    <button @click="$refs.basicModal.open()">Open modal</button>
 
     <!-- Modal component -->
-    <template>
+    
+<template>
       <div v-show="active">
         <!-- ... -->
       </div>
-    </template>
-
-    <script>
+</template>
+    
+<script>
       export default {
         // ...
         data() {
@@ -331,28 +330,28 @@ vue 支持组件通过 `this.$refs`来获得组件或者dom元素的上下文，
         },
         // ...
       };
-    </script>
-
+</script>
+    
     <!-- avoid accessing something that could be emitted -->
-    <template>
+<template>
       <range :max="max"
         :min="min"
         ref="range"
         :step="1"></range>
-    </template>
-
-    <script>
-      export default {
-        // ...
-        methods: {
-          getRangeCurrentValue() {
-              return this.$refs.range.currentValue;
-          },
-        },
-        // ...
-      };
-    </script>
-
+</template>
+    
+<script>
+  export default {
+    // ...
+    methods: {
+      getRangeCurrentValue() {
+          return this.$refs.range.currentValue;
+      },
+    },
+    // ...
+  };
+</script>
+```
 使用组件名称作为css作用域
 ==============
 

@@ -35,9 +35,7 @@ $ sudo docker attach 44fc0f0582d9
 
 ## 二、使用SSH进入Docker容器
 
-　　在生产环境中排除了使用`docker attach`命令进入容器之后，相信大家第一个想到的就是`ssh`。在镜像（或容器）中安装SSH Server，这样就能保证多人进入。
-
-容器且相互之间不受干扰了，相信大家在当前的生产环境中（没有使用Docker的情况）也是这样做的。但是使用了Docker容器之后不建议使用ssh进入到Docker容器内。关于为什么不建议使用，请参考如下文章：
+　　在生产环境中排除了使用`docker attach`命令进入容器之后，相信大家第一个想到的就是`ssh`。在镜像（或容器）中安装SSH Server，这样就能保证多人进入。容器且相互之间不受干扰了，相信大家在当前的生产环境中（没有使用Docker的情况）也是这样做的。但是使用了Docker容器之后不建议使用ssh进入到Docker容器内。关于为什么不建议使用，请参考如下文章：
 
 [为什么不需要在 Docker 容器中运行 sshd](http://www.oschina.net/translate/why-you-dont-need-to-run-sshd-in-docker?cmp)
 

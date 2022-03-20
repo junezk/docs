@@ -1,0 +1,448 @@
+{
+    "created_time": "2020-08-10T08:47:23Z",
+    "files": [
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "API网关在微服务中的应用.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "Python 操作 RabbitMQ 消息队列.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "Python 中使用 RabbitMQ 消息队列.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "RabbitMQ 的 Docker 部署.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "不要使用 JWT 进行会话管理.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "除了会CRUD之外，还应该知道什么叫CQRS.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "从 0 到 1 实现支撑百亿级请求量的微服务架构演化.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "从 0 开始的微服务架构.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "大型互联网公司分布式ID方案总结.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "大型跨国银行系统架构的微服务与敏捷开发实践之路.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "大型项目前端架构浅谈.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "分布式架构知识体系（内含超全核心知识大图）.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "分布式消息队列详解：10分钟搞懂同步和异步架构等问题.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "分布式之API接口返回格式如何优雅设计？.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "分析RESTful API安全性及如何采取保护措施.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "服务部署如何做到高可用.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "后台管理系统也需要微服务化.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "基于 DDD 的微服务设计和开发实战.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "基于容器的微服务架构技术选型与设计.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "架构设计-我的一个支持异步拉取数据和本地缓存client是如何设计的.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "精读《我在阿里数据中台大前端》.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "开放API网关实践.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "利用ELK分析Nginx日志生产实战(高清多图).md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "如何设计一个优秀的分布式系统？.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "软件架构设计常用概念、原则与思想.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "深入聊聊微服务架构的身份认证问题.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "数据治理的本质及实践.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "推荐系统过滤技术：基于内容的过滤及其利弊.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "网易考拉在服务化改造方面的实践.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "微服务12要素－－12factor.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "微服务分布式日志体系架构.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "微服务化的十个设计要点.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "微服务架构技术栈选型手册.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "微服务架构浅析及实践心得.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "微服务架构设计实践.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "微服务架构实践.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "微服务架构下的数据一致性保证.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "微服务统一登陆认证怎么做？JWT ？.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "微服务系列.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "微服务相关知识.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "消息队列RabbitMQ入门与5种模式详解.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "一次难得的分库分表实践.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:12Z",
+            "modified_time": "2020-08-10T08:53:12Z",
+            "name": "支撑马蜂窝会员体系全面升级背后的架构设计.md",
+            "tags": [
+            ]
+        },
+        {
+            "attachment_folder": "",
+            "attachments": [
+            ],
+            "created_time": "2020-08-10T08:53:40Z",
+            "modified_time": "2020-08-10T09:02:28Z",
+            "name": "如何选型分布式文件系统.md",
+            "tags": [
+            ]
+        }
+    ],
+    "sub_directories": [
+    ],
+    "version": "1"
+}

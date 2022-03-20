@@ -76,7 +76,7 @@ Q: 好的，我给您一个 Kubernetes，然后给你一个 基础 OS Pod “菜
 
 ![nginx-deploy](https://github.com/answer1991/articles/raw/master/pics/kubernetes-is-the-next-generation-os/pic-1.png) 
 
-##### 没有 Kubernetes 之前的部署
+### 没有 Kubernetes 之前的部署
 
 在没有 Kubernetes 之前，我们大概要做这么些操作才能交付这个 nginx 服务：
 
@@ -85,7 +85,7 @@ Q: 好的，我给您一个 Kubernetes，然后给你一个 基础 OS Pod “菜
 3. 到 DNS 管理页面申请一个 DNS 记录，写入把拿到的负载均衡的 IP 写入 A 记录。
 4. 把这个 DNS 记录作为这个 nginx 服务的交付成果，交付给用户。
 
-##### 有了 Kubernetes 的部署
+### 有了 Kubernetes 的部署
 
 有了 Kubernetes 之后， 我们只需要写一个 nginx 如何部署的 “菜单”，然后提交这个“菜单”给 Kubernetes，我们就完成了部署。 “菜单” 是一个 yaml 文件(例子中文件名 nginx.yaml)，大概这个样子:
 
@@ -121,13 +121,13 @@ spec:
       port: 80
       protocol: TCP
       targetPort: 80
-​```
+```
 
 提交“菜单”到 Kubernetes 集群：
 
 ```bash
 $ kubectl apply -f ./nginx.yaml
-​```
+```
 
 访问刚部署的 HTTP 服务:
 
@@ -140,11 +140,11 @@ $ kubectl apply -f ./nginx.yaml
 3. Service 会根据规则自动生成域名。规则不在这里详细展开介绍。
 4. 我们就能用 Service 自动生成的域名作为交付成果，交付给用户了！
 
-##### 容灾
+### 容灾
 
 Deployment 能自动副本保持，即我们的 nginx Pod 少了一个，Kubernetes 能自动帮我们补齐。
 
-##### 变更、发布、升级
+### 变更、发布、升级
 
 1. 如需要调整副本数目，我们只需要修改 Deployment.Spec.Replica 字段，再次 `kubectl apply -f ./nginx.yaml` 即可，副本调整完成。
 2. 如果我们需要升级镜像（nginx 二进制版本），同样的修改 PodSpec.Containers[*].Image 即可，然后 `kubectl apply -f ./nginx.yaml` 
@@ -214,7 +214,7 @@ metadata:
   name: "example-etcd-cluster"
 spec:
   size: 3
-​```
+```
 
 “etcd厨师长” 就会根据这个 “菜单” 做出一个副本数是3（Spec.Size=3）的 etcd 集群给你。用户不需要知道 3 副本的 etcd 集群里每个副本参数是什么样的。
 
@@ -233,7 +233,7 @@ spec:
 
 上图展示了我们的 My-App-Operator 的 “厨师长” 的关系图。当我们需要一个 "my-app" 应用实例时，我们只要告诉我们的 “厨师长” 是需要多少副本数的实例。我们的 “厨师长”  自动将需求转化成 Deployment，其它的功能就完全依靠了 “Deployment 厨师长”。
 
-##### 如何面向 Kubernetes 写一个 Operator
+### 如何面向 Kubernetes 写一个 Operator
 
 首先我们来看一下 “厨师长” (Operator) 需要关注一些什么事情，以及它做了什么事情：
 
@@ -268,20 +268,18 @@ func Reconcile(crName string) error {
     if diff(desireDeployment, deployment) {
         return client.UpdateDeployment(desireDeployment);
     }
-    
+
      // 如果期望和实际都一样，什么事情都不做了。
     return nil
 }
-​```
+```
 
-
-
-##### 面向 Kubernetes 变成 和 Operator  的优势总结
+### 面向 Kubernetes 变成 和 Operator  的优势总结
 
 1. 统一的信息获取源和统一的接口： Kube-Apiserver 就像是一个大的信息流转中心。所有的组件（“厨师长”）都通过这个中心上传他负责的资源（CR，Deployment，Pod都是 Kubernetes 的资源）的信息，同时，他也通过这个接口，去感知其它资源状态的变化，如果这些变化是他感兴趣的，那么他就开始工作（“厨师长” 开始工作）。
 2. 构建在 Kubernetes 核心组件以及 社区通用的 Operator 之上：站在巨人的肩膀上能让我们的工作更加的减负同时达到更加理想的效果。上文中，我们的 Operator 可能在依赖 Deployment 之后，他负责的 “菜”（Pod）就自带副本保持功能。同时，假如我们的应用（DB，Web）要依赖社区的 MySQL 数据库，那么我们的应用 Operator（Web + DB） 可以通过社区的 MySQL-Operator 提供的 CR 快速建出 MySQL 实例，然后再使用 Deployment 建出 Web。
 
-##### 优秀的社区 Operator 
+### 优秀的社区 Operator 
 
 1. 优秀的社区 Operator (awesome-operators): https://github.com/operator-framework/awesome-operators
 
@@ -297,13 +295,13 @@ FaaS 全称是 [Function as a service](https://en.wikipedia.org/wiki/Function_as
 
 说了那么多，其实我的初衷是希望每个开发者都从 Linux VM 转向 Kubernetes "VM"。但是转变发生在每个人身上，应该是有各种困难。我能想到的一些最基本的困难大概列在下面，同时欢迎跟我交流你的一些困惑。
 
-##### 代码变成镜像
+### 代码变成镜像
 
 大家都知道，Kubernetes 只允许以 Pod 的方式运行“进程”。在 FaaS 没成熟之前，如何把我们的代码变成一个镜像是一个比较头疼的事情。可能应用的开发同学并不想自己去理解 docker，怎么去打镜像。
 
 别担心！Spring 框架或者其扩展的脚手架应该已经可以在工程里自动添加 Dockerfile 文件，使用脚手架之后，用户只要执行 `make image` 这样的命令，就能构建出镜像了。
 
-##### 别说了，我还是想要一个 Linux VM
+### 别说了，我还是想要一个 Linux VM
 
 向 Kubernetes 提交下面这样的一个 YAML 文件，你就能得到一个 ubuntu VM：
 
@@ -316,10 +314,10 @@ spec:
   containers:
   - name: vm
     image: ubuntu
-​```
+```
 
 同时，告诉你一个更酷炫的玩法：自己定制一个属于你自己的 Linux 发行版！在原有的 OS 镜像基础上，加上你的 Shell 工具脚本、写一串向爱人表白的话、搞个开机 Logo，都很简单！做一个属于你自己的 Linux 镜像，那么在世界的任何地方，你都能起动一个经过你定制的 Linux VM。
 
-##### 哪里去获取一个 Kubernetes
+### 哪里去获取一个 Kubernetes
 
 首先，试试 mini-kube，或者立刻向阿里云买一个！

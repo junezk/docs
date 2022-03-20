@@ -63,10 +63,6 @@ window.addEventListener('popstate', ()=>{
 
 ### 安装 vue-router
 
-```
-install.js
-```
-
 通过 Object.defineProperty 将 _router 挂载在 Vue 原型的 router 属性的 get 函数上。 这样可以通过 this.router 来调用 _router。使用get的好处是，保证了安全性，只能读不能修改 $router。
 
 ```js
@@ -493,7 +489,7 @@ export default [
 
 我们需要将这五个路由分别引进来，并进行结合
 
-```
+```js
 import a from 'routers/a'
 import b from 'routers/b'
 import c from 'routers/c'
@@ -514,7 +510,7 @@ const routers = [].concat(a, b, c, d, e)
 
 例如，下面的例子会报错
 
-```
+```js
 const a = './route/a.js'
 // 会报错，a 不是一个模块
 require(a)
@@ -522,7 +518,7 @@ require(a)
 
 所以 require 中只能加字符串或者使用字符串拼接
 
-```
+```js
 const a = 'a.js'
 require('./route/' + a)
 ```

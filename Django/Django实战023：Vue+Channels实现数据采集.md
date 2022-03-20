@@ -1,0 +1,51 @@
+# Django实战023：Vue+Channels实现数据采集
+
+Channels为WebSocket封装了相应的接口，在
+./channels/generic/websocket.py文件中。该模块定义了4大类分别是WebsocketConsumer、AsyncWebsocketConsumer、JsonWebsocketConsumer和
+AsyncJsonWebsocketConsumer。从命名就可以看出主要是输出的数据类型不同和加载方式不同，我们可以根据自己的需求来选择对应的类方法（这里先来个最简单的WebsocketConsumer）。
+
+![Django实战023：Vue+Channels实现数据采集](Django实战023：Vue+Channels实现数据采集.assets/449cbab9974c4c40ba607a88612c0c6b)
+
+
+
+# WebsocketConsumer类
+
+WebsocketConsumer是Channels提供的Websocket类，这个类提供了很多Websocket的基础方法。常用的有connect（连接建立时触发）、receive（收到消息后触发）、disconnect（连接关闭时触发），AsyncWebsocketConsumer类继承了WebsocketConsumer中的方法，所以在AsyncWebsocketConsumer类看到的方法很少但是在使用的时候却可以找到很多。
+
+![Django实战023：Vue+Channels实现数据采集](Django实战023：Vue+Channels实现数据采集.assets/757b98659703480b9e49032f9fcb0d06)
+
+
+
+# 定义consumers.py
+
+这里我定义一个简单的数据采集类HncConsumer，用来获取华中数控机台的设备负载。由于负载数据需要一直地抛给前端，但是要保证WebSocket可以正常地运行。所以这里我们需要单独开个线程来做数据采集，当客户端断开链接时自动关闭WebSocket中的采集程序继续保持WebSocket监听。定义一个链接状态来实时判断是否采集对设备进行数据采集，在线程中判断链接状态为False时跳出采集循环来结束进程。
+
+![Django实战023：Vue+Channels实现数据采集](Django实战023：Vue+Channels实现数据采集.assets/b98497f882a645f9bc415851be1b486e)
+
+
+
+# 配置路由routing
+
+ASIG支持多种不同的协议，在这里可以通过ProtocolTypeRouter指定特定协议的路由信息。如果你需要认证可以添加中间件AuthMiddlewareStack或者SessionMiddlewareStack， channels封装了django的auth模块可以快速地实现信息认证。URLRouter则用来指定路由文件的路径，也可以直接将路由信息写在这里。这里需要注意的是我通过path来映射路由和执行函数之间的关系时这里指向了函数类，这里函数类的括号不能省否则会报错：TypeError: object.__init__() takes exactly one argument (the instance to initialize)。
+
+![Django实战023：Vue+Channels实现数据采集](Django实战023：Vue+Channels实现数据采集.assets/96abbc269f3e4da3889bffdfec7586e7)
+
+
+
+# Vue前端显示
+
+Vue我们用Echarts组件来实现，局部引用echarts模块。先在created初始化WebSocket链接和Echarts选项，当dom元素渲染之后我们开始挂载Echarts组件。数据我们通过message函数来接受，这里push的时候为了保证数据的连贯性我们采用先进先出的原则。当数组中的元素数量达到指定要求时shift掉第一个值在push追加，这样我们看到的线条就显得更加连贯。采集的时候记得加个延迟，不然数据太快了前端显示也会出现跳屏的感觉。
+
+![Django实战023：Vue+Channels实现数据采集](Django实战023：Vue+Channels实现数据采集.assets/8759230316d049a3959a76d4a0996740)
+
+
+
+# 总结：
+
+这里我还打算添加两条可以更改的标识线作为参考线，这样就可以很直观地看出我的负载是不是超差了。标记线我们可以通过markLine来实现，在series中定义markLine对象来实现标识线的渲染。数据我们可以添加两个输入框来动态调整，最后在提交的时候刷新下Echart即可。
+
+![Django实战023：Vue+Channels实现数据采集](Django实战023：Vue+Channels实现数据采集.assets/adea82e730fe4635839fcdb059151775)
+
+
+
+以上内容是小编给大家分享的【Django实战023：Vue+Channels实现数据采集】，希望对大家有所帮助。如果大家有任何疑问请给我留言，小编会及时回复大家的。

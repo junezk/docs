@@ -1,15 +1,35 @@
 # Windows 下Docker的使用
 
+
+
 ## 基本操作
 
 - docker pull image-name:tag  拉取镜像
+- docker search 镜像名  查询镜像
 - docker images 显示已下载镜像
 - docker rmi 镜像id|镜像名  删除镜像
 - docker ps -a 查看容器
 - docker rm 容器id  删除容器
 - docker run 运行容器
 - docker stop 结束运行容器
-- docker start 重新运行容器
+- docker start  重新运行容器
+- docker inspect 容器id   查看容器详细信息
+  - docker inspect -f {{.State.Pid}} 容器id   查看容器pid
+- 进入容器
+  - docker attach 容器名/id   进入容器，当多个窗口同时使用该命令进入该容器时，所有的窗口都会同步显示。如果有一个窗口阻塞了，那么其他窗口也无法再进行操作。
+  - 使用SSH进入Docker容器
+  - 使用nsenter进入Docker容器  需要主机安装`nsenter`。
+    - nsenter --target [容器pid] --mount --uts --ipc --net --pid
+  - docker exec -it [容器id] /bin/bash   进入容器，开启终端
+- 导入、导出镜像
+  - docker save -o 文件名 镜像名    例如：`docker save > nginx.tar nginx:latest`
+  - docker load -i 文件名   例如：`docker load < nginx.tar `
+- 导入、导出容器
+  - docker export -o 文件名 容器名
+  - docker import 文件名 镜像名  例如：`docker import nginx-test.tar nginx:imp`
+- docker logs 容器名   查看容器运行日志
+
+两种方式的区别：导入导出镜像可以保留镜像的分层信息，导入导出容器将丢失这些信息。因此，备份镜像、迁移镜像使用上面的方法，启动容器后，容器内容有修改变化需要备份，使用下面的方法。
 
 ## 示例
 
@@ -24,38 +44,4 @@
   --name 给容器起名字
 
   -d 以守护进程方式运行
-
-## Docker debian镜像加速命令：
-
-```
-#更新apt-get源 使用163的源
-RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak \
-    echo "deb http://mirrors.163.com/debian/ jessie main non-free contrib" >/etc/apt/sources.list && \
-    echo "deb http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources.list && \
-    echo "deb-src http://mirrors.163.com/debian/ jessie main non-free contrib" >>/etc/apt/sources.list && \
-    echo "deb-src http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources.list
-```
-
-Docker ubuntu镜像加速命令：
-
-```
-FROM ubuntu:latest
-RUN  sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
-&& apt-get clean \
-&& apt-get update
-```
-
-
-
-## pip install 使用豆瓣源加速
-
-```
- pip install -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com xxxx
-```
-
-## Python.h:11:10: fatal error: limits.h: No such file or directory
-
-```
-apk add musl-dev
-```
 

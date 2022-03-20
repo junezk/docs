@@ -111,18 +111,20 @@ wget https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce
 
 ➜ yum install docker-ce-selinux-17.03.2.ce-1.el7.centos.noarch.rpm -y
 ➜ yum install docker-ce-17.03.2.ce-1.el7.centos.x86_64.rpm -y
-```
 
-```
-设置开机启动并启动docker
+# 设置开机启动并启动docker
 systemctl enable docker 
 systemctl start docker 
 
-替换docker相关配置
+# 替换docker相关配置
 sed -i '/ExecStart=\/usr\/bin\/dockerd/i\ExecStartPost=\/sbin/iptables -I FORWARD -s 0.0.0.0\/0 -d 0.0.0.0\/0 -j ACCEPT' /usr/lib/systemd/system/docker.service
-sed -i '/dockerd/s/$/ \-\-storage\-driver\=overlay2 --insecure-registry 192.168.60.26/g' /usr/lib/systemd/system/docker.service复制代码
+sed -i '/dockerd/s/$/ \-\-storage\-driver\=overlay2 --insecure-registry 192.168.60.26/g' /usr/lib/systemd/system/docker.service
+```
+
 注意：
 1.Docker默认从官方拉取镜像,并且从1.12版本之后，默认私有仓库是使用https来进行连接,我们需要将使用私服的主机上docker启动文件进行修改，在启动命令添加--insecure-registry 192.168.1.197
+
+```
 Docker-compose Install
 ```
 

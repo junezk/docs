@@ -2,8 +2,6 @@
 
 
 
-参考：http://www.mamicode.com/info-detail-1917569.html
-
 **我使用方法二、修改镜像和容器的存放路径**
 
 指定镜像和容器存放路径的参数是--graph=/var/lib/docker，我们只需要修改配置文件指定启动参数即可。
@@ -35,3 +33,4 @@ systemctl restart docker.service
 //查看 Docker Root Dir: /var/lib/docker是否改成设定的目录/new-path/docker 
 
 docker info
+

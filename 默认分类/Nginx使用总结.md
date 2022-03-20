@@ -17,17 +17,19 @@ Nginx安装
 
 ### 启动
 
-    /opt/soft/nginx/sbin/nginx
-    /opt/soft/nginx/sbin/nginx -s stop   # fast shutdown
-    /opt/soft/nginx/sbin/nginx -s quit   # graceful shutdown
-    /opt/soft/nginx/sbin/nginx -s reload   # reloading the configuration file
-    /opt/soft/nginx/sbin/nginx -s reopen   # reopening the log files
-    复制代码
+```bash
+/opt/soft/nginx/sbin/nginx
+/opt/soft/nginx/sbin/nginx -s stop   # fast shutdown
+/opt/soft/nginx/sbin/nginx -s quit   # graceful shutdown
+/opt/soft/nginx/sbin/nginx -s reload   # reloading the configuration file
+/opt/soft/nginx/sbin/nginx -s reopen   # reopening the log files
+```
 
 设置开机自启动：
 
-    echo "/opt/soft/nginx/sbin/nginx -c /opt/soft/nginx/conf/nginx.conf" >> /etc/rc.local
-    复制代码
+```bash
+echo "/opt/soft/nginx/sbin/nginx -c /opt/soft/nginx/conf/nginx.conf" >> /etc/rc.local
+```
 
 Nignx配置虚拟主机、反向代理、负载均衡
 ---------------------
@@ -38,67 +40,70 @@ _主要配置server模块的 listen 和 server_name_
 
 #### 基于域名
 
-    server {
-    	listen 80;
-    	server_name test.a.com;
-    	location / {
-    		proxy_pass http://192.168.0.1;   #反向代理到其他站点
-    	}
-    }
-    server {
-    	listen 80;
-    	server_name test.b.com;
-    	location / {
-    		proxy_pass http://192.168.0.2;   #反向代理到其他站点
-    	}
-    }
-    复制代码
+```nginx
+server {
+	listen 80;
+	server_name test.a.com;
+	location / {
+		proxy_pass http://192.168.0.1;   #反向代理到其他站点
+	}
+}
+server {
+	listen 80;
+	server_name test.b.com;
+	location / {
+		proxy_pass http://192.168.0.2;   #反向代理到其他站点
+	}
+}
+```
 
 **注意：** 配置文件下载服务器
 
-    server {
-    	listen       80;
-    	server_name  file.download.com;
-    	charset utf-8;
-    	location ~ ^/(.*)$ {
-    		add_header Content-Disposition "attachment; filename=$1";   #设置header
-    		alias "C:/Robot_Download/$1";   #文件的本地位置
-    	}
-    }
-    
-    复制代码
+```nginx
+server {
+	listen       80;
+	server_name  file.download.com;
+	charset utf-8;
+	location ~ ^/(.*)$ {
+		add_header Content-Disposition "attachment; filename=$1";   #设置header
+		alias "C:/Robot_Download/$1";   #文件的本地位置
+	}
+}
+```
 
 #### 基于端口
 
-    server {
-    	listen 80;
-    	server_name localhost;
-    	alias /data/html/index.html;   #也可使用root、location等方式指向静态资源
-    }
-    server {
-    	listen 81;
-    	server_name localhost;
-    	root /data/html/index.html;   #也可使用alias、location等方式指向静态资源
-    }
-    复制代码
+```nginx
+server {
+	listen 80;
+	server_name localhost;
+	alias /data/html/index.html;   #也可使用root、location等方式指向静态资源
+}
+server {
+	listen 81;
+	server_name localhost;
+	root /data/html/index.html;   #也可使用alias、location等方式指向静态资源
+}
+```
 
 #### 基于ip
 
-    server {
-    	listen 100.100.100.100:80;
-    	server_name localhost;
-    	location / {
-    		alias /data/html/index.html;   #也可使用alias、root等方式指向静态资源
-    	}
-    }
-    server {
-    	listen 100.100.100.101:80;
-    	server_name localhost;
-    	location / {
-    		alias /data/html/index.html;   #也可使用alias、root等方式指向静态资源
-    	}
-    }
-    复制代码
+```nginx
+server {
+	listen 100.100.100.100:80;
+	server_name localhost;
+	location / {
+		alias /data/html/index.html;   #也可使用alias、root等方式指向静态资源
+	}
+}
+server {
+	listen 100.100.100.101:80;
+	server_name localhost;
+	location / {
+		alias /data/html/index.html;   #也可使用alias、root等方式指向静态资源
+	}
+}
+```
 
 ### 反向代理
 

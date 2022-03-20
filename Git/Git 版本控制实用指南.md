@@ -176,6 +176,8 @@ $ git config --global user.email "email@example.com"
 
 注意`git config`命令的`--global`参数，用了这个参数，表示你这台机器上所有的 Git 仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和 Email 地址。
 
+
+
 ## Git 常用命令
 
 ![Git 常用命令速查表](Git 版本控制实用指南.assets/011500266295799.jpg)
@@ -294,7 +296,7 @@ merge 命令把不同的分支合并起来。如上图，在实际开放中，�
 
 ![代码冲突](Git 版本控制实用指南.assets/4389199-01f5ea82c147586a.webp)
 
-```
+```shell
 # 冲突处理
 git diff // 对比 workspace 与 index
 git diff HEAD // 对于 workspace 与最后一次 commit
@@ -319,7 +321,7 @@ git rebase # 衍合，线性化的自动， D → A
 
 ### 其他
 
-```
+```shell
 # 其他
 gitk // 开灯图形化 git
 git config color.ui true // 彩色的 git 输出
@@ -330,10 +332,6 @@ git add -i // 交互式添加文件到暂存区
 ## Git 在团队中的使用
 
 详见 Git 在团队中的最佳实践--如何正确使用 Git Flow 。
-
-## GIT 图书
-
-- [Pro Git](https://git-scm.com/book/zh/v2) 《精通 Git（第二版）》的在线版本，强烈推荐
 
 ## GIT 图书
 
@@ -488,3 +486,14 @@ git add -i // 交互式添加文件到暂存区
 **原理:** 虽然 `.gitignore` 会阻止 Git 追踪文件的修改，甚至不关注文件是否存在，但这只是针对那些以前从来没有追踪过的文件。一旦有个文件被加入并提交了，Git 就会持续关注该文件的改变。类似地，如果你利用 `git add -f` 来强制或覆盖了 `.gitignore`， Git 还会持续追踪改变的情况。之后你就不必用`-f` 来添加这个文件了。
 
 如果你希望从 Git 的追踪对象中删除那个本应忽略的文件， `git rm --cached` 会从追踪对象中删除它，但让文件在磁盘上保持原封不动。因为现在它已经被忽略了，你在 `git status` 里就不会再看见这个文件，也不会再偶然提交该文件的修改了。
+
+#### 解决 git status 中文文件名编码问题
+
+在默认设置下，中文文件名在工作区状态输出，中文名不能正确显示，而是显示为八进制的字符编码。
+
+通过将`git`配置变量 `core.quotepath` 设置为false，就可以解决中文文件名称在这些Git命令输出中的显示问题,
+
+```bash
+git config --global core.quotepath false
+```
+
