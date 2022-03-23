@@ -130,3 +130,4 @@ ages := map[string]int{
 
 使用`delete`来移除某个map元素：`delete ages['alice']`
 
+go中的

@@ -1,7 +1,5 @@
 # 关于
 
-[![Build Status](https://drone.io/github.com/astaxie/beego/status.png)](https://drone.io/github.com/astaxie/beego/latest) [![Go Walker](http://gowalker.org/api/v1/badge)](http://gowalker.org/github.com/astaxie/beego)
-
 本网站文档页面详细描述了 beego 应用框架的各个方面。
 
 ### 新手指导

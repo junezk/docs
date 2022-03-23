@@ -1,10 +1,9 @@
-# Go 语言实战：编写可维护 Go 语言代码建议
+
+[TOC]
 
 ## 介绍
 
-你们好,我在接下来的两个会议中的目标是向你们提供有关编写 Go 代码最佳实践的建议。html
-
-这是一个研讨会形式的演讲，不会有幻灯片,而是直接从文档开始。git
+你们好，我在接下来的两个会议中的目标是向你们提供有关编写 Go 代码最佳实践的建议。这是一个研讨会形式的演讲，不会有幻灯片，而是直接从文档开始。
 
 > 贴士: 在这里有最新的文章连接
 > [https://dave.cheney.net/practical-go/presentations/qcon-china.html](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html)
@@ -326,9 +325,7 @@ json.Unmarshall(reader, thing)
 
 ```go
 var players = 0
-
 var things []Thing = nil
-
 var thing = new(Thing)
 json.Unmarshall(reader, thing)
 ```
@@ -657,11 +654,10 @@ func (l *LimitedReader) Read(p []byte) (n int, err error) {
 
 例如，`net/http` 包没有 `client` 和 `server` 的分包，而是有一个 `client.go` 和 `server.go` 文件，每一个文件都有各自的类型，还有一个 `transport.go` 文件，用于公共消息传输代码。
 
-> 贴士:
-> **标识符的名称包括其包名称。**
+> 贴士：**标识符的名称包括其包名称。**
 > 重要的是标识符的名称包括其包的名称。
->
-> - 当由另外一个包引用时，`net/http` 包中的 Get 函数变为 `http.Get`。
+> 
+>- 当由另外一个包引用时，`net/http` 包中的 Get 函数变为 `http.Get`。
 > - 当导入到其余包中时，`strings` 包中的 `Reader` 类型变为 `strings.Reader`。
 > - `net` 包中的 `Error` 接口显然与网络错误有关。
 
@@ -763,8 +759,7 @@ func main() {
 }
 ```
 
-> 注意:
-> `var s []string` 相似于它上面的两条注释行，但并不彻底相同。值为 `nil` 的切片与具备零长度的切片就能够来相互比较。如下代码将输出 `false`。
+> 注意：`var s []string` 相似于它上面的两条注释行，但并不彻底相同。值为 `nil` 的切片与具备零长度的切片就能够来相互比较。如下代码将输出 `false`。
 
 ```go
 func main() {
@@ -857,7 +852,7 @@ Go 语言没有提供有关可见性的详细方法; Java有 `public`、`protect
 - 若是你的文件中 `import` 的声明相似，请考虑将它们组合起来。或者肯定 `import` 集之间的差别并移动它们。
 - 不一样的文件应该负责包的不一样区域。`messages.go` 可能负责网络的 `HTTP` 请求和响应，`http.go` 可能包含底层网络处理逻辑，`client.go` 和 `server.go` 实现 `HTTP` 业务逻辑请求的实现或路由等等。
 
-> 贴士：首选名词为源文件命名。
+> 贴士：**首选名词为源文件命名**
 >
 > 注意：Go编译器并行编译每一个包。 在一个包中，编译器并行编译每一个函数（方法只是 Go 语言中函数的另外一种写法）。 更改包中代码的布局不会影响编译时间。
 
@@ -871,13 +866,13 @@ Go 语言没有提供有关可见性的详细方法; Java有 `public`、`protect
 
 可是，你应该将 `Example` 测试函数放在外部测试文件中。这确保了在 `godoc` 中查看时，示例具备适当的包名前缀而且能够轻松地进行复制粘贴。
 
-> 贴士：** 避免复杂的包层次结构，抵制应用分类法** 
+> 贴士：**避免复杂的包层次结构，抵制应用分类法** 
 > Go 语言包的层次结构对于`go tool` 没有任何意义除了下一节要说的。 例如，`net/http` 包不是一个子包或者`net`  包的子包。
 > 若是在项目中建立了不包含 `.go` 文件的中间目录，则可能没法遵循此建议。
 
 #### 5.1.3. 使用 `internal` 包来减小公共API
 
-若是项目包含多个包，可能有一些公共的函数，这些函数旨在供项目中的其余包使用，但不打算成为项目的公共API的一部分。 若是你发现是这种状况，那么 `go tool` 会识别一个特殊的文件夹名称 - 而非包名称 - `internal/` 可用于放置对项目公开的代码，但对其余项目是私有的。
+若是项目包含多个包，可能有一些公共的函数，这些函数旨在供项目中的其余包使用，但不打算成为项目的公共 API 的一部分。 若是你发现是这种状况，那么 `go tool` 会识别一个特殊的文件夹名称 - 而非包名称 - `internal/` 可用于放置对项目公开的代码，但对其余项目是私有的。
 
 要建立此类包，请将其放在名为 `internal/` 的目录中，或者放在名为 `internal/` 的目录的子目录中。 当 `go` 命令在其路径中看到导入包含 `internal` 的包时，它会验证执行导入的包是否位于 `internal` 目录。
 
@@ -952,7 +947,7 @@ func main() {
 
 经过这种方式，`CopyFile` 老是能被正确调用 - 还能够经过单元测试 - 而且能够被设置为私有，进一步下降了误用的可能性。
 
-> 贴士: 具备多个相同类型参数的API难以正确使用。
+> 贴士：具备多个相同类型参数的API难以正确使用。
 
 #### 6.2. 为其默认用例设计 API
 
@@ -1124,7 +1119,7 @@ func anyPositive(first int, rest ...int) bool {
 func Save(f *os.File, doc *Document) error
 ```
 
-我能够指定这个函数 `Save`，它将 `*os.File` 做为写入 `Document` 的目标。但这样作会有一些问题
+我能够指定这个函数 `Save`，它将 `*os.File` 做为写入 `Document` 的目标。但这样作会有一些问题：
 
 `Save` 的签名排除了将数据写入网络位置的选项。假设网络存储可能在之后成为需求，则此功能的签名必须改变，从而影响其全部调用者。
 
@@ -1193,8 +1188,7 @@ func Save(w io.Writer, doc *Document) error
 
 若是你昨天在个人演讲中，我谈到了改进错误处理的提案。可是你知道有什么比改进错误处理的语法更好吗？那就是根本不须要处理错误。
 
-> 注意:
-> 我不是说“删除你的错误处理”。个人建议是，修改你的代码，这样就不用处理错误了。
+> 注意：我不是说“删除你的错误处理”。个人建议是，修改你的代码，这样就不用处理错误了。
 
 本节从 John Ousterhout 最近的著做“软件设计哲学”[[9]]([https://www.amazon.com/Philos...](http://www.javashuo.com/link?url=https://www.amazon.com/Philosophy-Software-Design-John-Ousterhout/dp/1732102201)中汲取灵感)。该书的其中一章是“定义不存在的错误”。咱们将尝试将此建议应用于 Go 语言。
 
@@ -1245,8 +1239,7 @@ if err != nil {
 
 为了解决这个问题，咱们从新排列逻辑增来加行数，而后查看是否须要退出循环。
 
-> 注意:
-> 这个逻辑仍然不完美，你能发现错误吗？
+> 注意：这个逻辑仍然不完美，你能发现错误吗？
 
 可是咱们尚未完成检查错误。当 `ReadString` 到达文件末尾时，预期它会返回 `io.EOF`。`ReadString` 须要某种方式在没有什么可读时来中止。所以，在咱们将错误返回给 `CountLine` 的调用者以前，咱们须要检查错误是不是 `io.EOF`，若是不是将其错误返回，不然咱们返回 `nil` 说一切正常。
 
@@ -1268,8 +1261,7 @@ func CountLines(r io.Reader) (int, error) {
 
 在 `bufio.Scanner` 内部使用 `bufio.Reader`，但它添加了一个很好的抽象层，它有助于经过隐藏 `CountLines` 的操做来消除错误处理。
 
-> 注意:
-> `bufio.Scanner` 能够扫描任何模式，但默认状况下它会查找换行符。
+> 注意：`bufio.Scanner` 能够扫描任何模式，但默认状况下它会查找换行符。
 
 若是扫描程序匹配了一行文本而且没有遇到错误，则 `sc.Scan()` 方法返回 `true` 。所以，只有当扫描仪的缓冲区中有一行文本时，才会调用 `for` 循环的主体。这意味着咱们修改后的 `CountLines` 正确处理没有换行符的状况，而且还处理文件为空的状况。
 
@@ -1277,8 +1269,7 @@ func CountLines(r io.Reader) (int, error) {
 
 最后， `sc.Err()` 负责处理 `io.EOF` 并在达到文件末尾时将其转换为 `nil`，而不会遇到其余错误。
 
-> 贴士:
-> 当遇到难以忍受的错误处理时，请尝试将某些操做提取到辅助程序类型中。
+> 贴士：当遇到难以忍受的错误处理时，请尝试将某些操做提取到辅助程序类型中。
 
 #### 7.1.2. WriteResponse
 
@@ -1655,8 +1646,7 @@ func main() {
 
 我想向你提出另外一种你可能在用的解决方案。 与其在 `goroutine` 中运行 `http.ListenAndServe`，会给咱们留下处理 `main goroutine` 的问题，不如在 `main goroutine` 自己上运行 `http.ListenAndServe`。
 
-> 贴士:
-> 若是 Go 语言程序的 `main.main` 函数返回，不管程序在一段时间内启动的其余 `goroutine` 在作什么, Go 语言程序会无条件地退出。
+> 贴士：若是 Go 语言程序的 `main.main` 函数返回，不管程序在一段时间内启动的其余 `goroutine` 在作什么, Go 语言程序会无条件地退出。
 
 ```go
 package main
@@ -1681,8 +1671,7 @@ func main() {
 
 这一般会消除将结果从 `goroutine` 返回到其启动程序所需的大量状态跟踪和通道操做。
 
-> 贴士:
-> 许多 Go 程序员过分使用 `goroutine`，特别是刚开始时。与生活中的全部事情同样，适度是成功的关键。
+> 贴士：许多 Go 程序员过分使用 `goroutine`，特别是刚开始时。与生活中的全部事情同样，适度是成功的关键。
 
 #### 8.2. 将并发性留给调用者
 
@@ -1701,8 +1690,7 @@ func ListDirectory(dir string) chan string
 
 让咱们看看第二个例子。 这个示例更像是 Go 语言风格，`ListDirectory` 返回一个通道，经过该通道传递目录条目。当通道关闭时，代表没有更多目录条目。因为在 `ListDirectory` 返回后发生了通道的填充，`ListDirectory` 可能会启动一个 `goroutine` 来填充通道。
 
-> 注意:
-> 第二个版本实际上没必要使用 Go 协程; 它能够分配一个足以保存全部目录条目而不阻塞的通道，填充通道，关闭它，而后将通道返回给调用者。但这样作不太现实，由于会消耗大量内存来缓冲通道中的全部结果。
+> 注意：第二个版本实际上没必要使用 Go 协程; 它能够分配一个足以保存全部目录条目而不阻塞的通道，填充通道，关闭它，而后将通道返回给调用者。但这样作不太现实，由于会消耗大量内存来缓冲通道中的全部结果。
 
 通道版本的 `ListDirectory` 还有两个问题：
 
@@ -1717,8 +1705,7 @@ func ListDirectory(dir string, fn func(string))
 
 绝不奇怪，这就是 `filepath.WalkDir` 函数的工做方式。
 
-> 贴士:
-> 若是你的函数启动了 `goroutine`，你必须为调用者提供一种明确中止 `goroutine` 的方法。 把异步执行函数的决定留给该函数的调用者一般会更容易些。
+> 贴士：若是你的函数启动了 `goroutine`，你必须为调用者提供一种明确中止 `goroutine` 的方法。 把异步执行函数的决定留给该函数的调用者一般会更容易些。
 
 #### 8.3. 永远不要启动一个中止不了的 goroutine。
 
@@ -1772,8 +1759,7 @@ func main() {
 
 可是这个程序存在一些可操做性问题。 若是 `serveApp` 返回，那么 `main.main` 将返回，致使程序关闭并由你使用的进程管理器来从新启动。
 
-> 贴士:
-> 正如 Go 语言中的函数将并发性留给调用者同样，应用程序应该将监视其状态和检测是否重启的工做留给另外的程序来作。 不要让你的应用程序负责从新启动本身，最好从应用程序外部处理该过程。
+> 贴士：正如 Go 语言中的函数将并发性留给调用者同样，应用程序应该将监视其状态和检测是否重启的工做留给另外的程序来作。 不要让你的应用程序负责从新启动本身，最好从应用程序外部处理该过程。
 
 然而，`serveDebug` 是在一个单独的 `goroutine` 中运行的，返回后该 `goroutine` 将退出，而程序的其他部分继续。 因为 `/debug` 处理程序已中止工做好久，所以操做人员不会很高兴发现他们没法在你的应用程序中获取统计信息。
 
@@ -1810,8 +1796,7 @@ func main() {
 1. 若是 `ListenAndServer` 返回 `nil` 错误，则不会调用 `log.Fatal`，而且该端口上的 HTTP 服务将在不中止应用程序的状况下关闭。
 2. `log.Fatal` 调用 `os.Exit`，它将无条件地退出程序; `defer` 不会被调用，其余 `goroutines` 也不会被通知关闭，程序就中止了。 这使得编写这些函数的测试变得困难。
 
-> 贴士:
-> 只在 `main.main` 或 `init` 函数中的使用 `log.Fatal`。
+> 贴士：只在 `main.main` 或 `init` 函数中的使用 `log.Fatal`。
 
 咱们真正想要的是任何错误发送回 `goroutine` 的调用者，以便它能够知道 `goroutine` 中止的缘由，能够干净地关闭程序进程。
 
@@ -1905,42 +1890,26 @@ func main() {
 
 如今，每次咱们在 `done` 通道上收到一个值时，咱们关闭 `stop` 通道，这会致使在该通道上等待的全部 `goroutine` 关闭其 `http.Server`。 这反过来将致使其他全部的 `ListenAndServe` `goroutines` 返回。 一旦咱们开启的全部 `goroutine` 都中止了，`main.main` 就会返回而且进程会干净地中止。
 
-> 贴士:
-> 本身编写这种逻辑是重复而微妙的。 参考下这个包: [https://github.com/heptio/workgroup](http://www.javashuo.com/link?url=https://github.com/heptio/workgroup)，它会为你完成大部分工做。
+> 贴士：本身编写这种逻辑是重复而微妙的。 
 
-------
+参考下这个包: [https://github.com/heptio/workgroup](http://www.javashuo.com/link?url=https://github.com/heptio/workgroup)，它会为你完成大部分工做。
 
-> 引用:
->
-> [1](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_1). [https://gaston.life/books/effective-programming/](http://www.javashuo.com/link?url=https://gaston.life/books/effective-programming/)
->
-> [2](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_2). [https://talks.golang.org/2014/names.slide#4](http://www.javashuo.com/link?url=https://talks.golang.org/2014/names.slide#4)
->
-> [3](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_3). [https://www.infoq.com/articles/API-Design-Joshua-Bloch](http://www.javashuo.com/link?url=https://www.infoq.com/articles/API-Design-Joshua-Bloch)
->
-> [1](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_1). [https://www.lysator.liu.se/c/pikestyle.html](http://www.javashuo.com/link?url=https://www.lysator.liu.se/c/pikestyle.html)
->
-> [2](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_2). [https://speakerdeck.com/campoy/understanding-nil](http://www.javashuo.com/link?url=https://speakerdeck.com/campoy/understanding-nil)
->
-> [3](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_3). [https://www.youtube.com/watch?v=Ic2y6w8lMPA](http://www.javashuo.com/link?url=https://www.youtube.com/watch?v=Ic2y6w8lMPA)
->
-> [4](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_4). [https://medium.com/@matryer/line-of-sight-in-code-186dd7cdea88](http://www.javashuo.com/link?url=https://medium.com/@matryer/line-of-sight-in-code-186dd7cdea88)
->
-> [5](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_5). [https://golang.org/doc/go1.4#internalpackages](http://www.javashuo.com/link?url=https://golang.org/doc/go1.4#internalpackages)
->
-> [6](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_6). [https://dave.cheney.net/2014/10/17/functional-options-for-friendly-apis](http://www.javashuo.com/link?url=https://dave.cheney.net/2014/10/17/functional-options-for-friendly-apis)
->
-> [7](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_7). [https://commandcenter.blogspot.com/2014/01/self-referential-functions-and-design.html](http://www.javashuo.com/link?url=https://commandcenter.blogspot.com/2014/01/self-referential-functions-and-design.html)
->
-> [8](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_8). [https://dave.cheney.net/2016/04/27/dont-just-check-errors-handle-them-gracefully](http://www.javashuo.com/link?url=https://dave.cheney.net/2016/04/27/dont-just-check-errors-handle-them-gracefully)
->
-> [9](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_9). [https://www.amazon.com/Philosophy-Software-Design-John-Ousterhout/dp/1732102201](http://www.javashuo.com/link?url=https://www.amazon.com/Philosophy-Software-Design-John-Ousterhout/dp/1732102201)
->
-> [10](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_10). [https://blog.golang.org/errors-are-values](http://www.javashuo.com/link?url=https://blog.golang.org/errors-are-values)
->
-> [11](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_11). [http://www.gopl.io/](http://www.javashuo.com/link?url=http://www.gopl.io/)
+### 引用：
 
-------
+[1](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_1). [https://gaston.life/books/effective-programming/](http://www.javashuo.com/link?url=https://gaston.life/books/effective-programming/)
+[2](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_2). [https://talks.golang.org/2014/names.slide#4](http://www.javashuo.com/link?url=https://talks.golang.org/2014/names.slide#4)
+[3](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_3). [https://www.infoq.com/articles/API-Design-Joshua-Bloch](http://www.javashuo.com/link?url=https://www.infoq.com/articles/API-Design-Joshua-Bloch)
+[4](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_1). [https://www.lysator.liu.se/c/pikestyle.html](http://www.javashuo.com/link?url=https://www.lysator.liu.se/c/pikestyle.html)
+[5](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_2). [https://speakerdeck.com/campoy/understanding-nil](http://www.javashuo.com/link?url=https://speakerdeck.com/campoy/understanding-nil)
+[6](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_3). [https://www.youtube.com/watch?v=Ic2y6w8lMPA](http://www.javashuo.com/link?url=https://www.youtube.com/watch?v=Ic2y6w8lMPA)
+[7](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_4). [https://medium.com/@matryer/line-of-sight-in-code-186dd7cdea88](http://www.javashuo.com/link?url=https://medium.com/@matryer/line-of-sight-in-code-186dd7cdea88)
+[8](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_5). [https://golang.org/doc/go1.4#internalpackages](http://www.javashuo.com/link?url=https://golang.org/doc/go1.4#internalpackages)
+[9](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_6). [https://dave.cheney.net/2014/10/17/functional-options-for-friendly-apis](http://www.javashuo.com/link?url=https://dave.cheney.net/2014/10/17/functional-options-for-friendly-apis)
+[10](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_7). [https://commandcenter.blogspot.com/2014/01/self-referential-functions-and-design.html](http://www.javashuo.com/link?url=https://commandcenter.blogspot.com/2014/01/self-referential-functions-and-design.html)
+[11](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_8). [https://dave.cheney.net/2016/04/27/dont-just-check-errors-handle-them-gracefully](http://www.javashuo.com/link?url=https://dave.cheney.net/2016/04/27/dont-just-check-errors-handle-them-gracefully)
+[12](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_9). [https://www.amazon.com/Philosophy-Software-Design-John-Ousterhout/dp/1732102201](http://www.javashuo.com/link?url=https://www.amazon.com/Philosophy-Software-Design-John-Ousterhout/dp/1732102201)
+[13](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_10). [https://blog.golang.org/errors-are-values](http://www.javashuo.com/link?url=https://blog.golang.org/errors-are-values)
+[14](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html#_footnoteref_11). [http://www.gopl.io/](http://www.javashuo.com/link?url=http://www.gopl.io/)
 
 **原文连接：**[Practical Go: Real world advice for writing maintainable Go programs](http://www.javashuo.com/link?url=https://dave.cheney.net/practical-go/presentations/qcon-china.html)
 
@@ -1948,16 +1917,3 @@ func main() {
 - *待更新的译注以后会作进一步修改翻译*
 - *翻译：[田浩](http://www.javashuo.com/link?url=https://github.com/llitfkitfk)*
 - *邮箱：<llitfkitfk@gmail.com>*
-
-相关文章
-
-1. [Go语言实战: 编写可维护Go语言代码建议](http://www.javashuo.com/article/p-esmcjoxq-bv.html)
-2. [Go 语言实战: 编写可维护 Go 语言代码建议](http://www.javashuo.com/article/p-opybamda-mv.html)
-3. [【译】Go 语言实践：编写可维护的程序的建议](http://www.javashuo.com/article/p-fhkfhdfl-dw.html)
-4. [Go 语言实战](http://www.javashuo.com/article/p-wkifagjj-hs.html)
-5. [go语言RPC实战](http://www.javashuo.com/article/p-tnmtvdrg-mv.html)
-6. [go语言实战向导](http://www.javashuo.com/article/p-xocjaetj-w.html)
-7. [Go 语言教程实战](http://www.javashuo.com/article/p-gbsnvqoh-nk.html)
-8. [go语言实战 摘抄](http://www.javashuo.com/article/p-asgdrelb-eq.html)
-9. [go语言功能代码](http://www.javashuo.com/article/p-xjebxfhp-ey.html)
-10. [go语言编码规范](http://www.javashuo.com/article/p-zwirwrlm-x.html)
