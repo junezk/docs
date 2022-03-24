@@ -280,3 +280,19 @@ participant 远程仓库
 
 - `git grep keys`：在工作目录中所有文件中搜索`keys`
 - `git grep --cached keys`：在暂存区中所有文件中搜索`keys`
+
+### **z. 其它**
+
+#### 1. 解决 `git` 中文乱码
+
+- Git status 中文显示乱码
+
+默认情况下，中文名显示8进制字符编码，需要修改git配置文件
+
+```shell
+git config --global core.quotepath false
+```
+
+- Git bash 终端中文显示乱码
+
+git bash终端需要设置成中文和utf-8编码。
