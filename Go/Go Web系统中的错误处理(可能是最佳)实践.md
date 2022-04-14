@@ -113,9 +113,9 @@ type BizError struct {
 
 ```go
 var bizErr *biz.BizError
-    if errors.As(err, &bizErr) {
-        return vo.NewNoDataCommonResponse(errcode.BIZ_ERR, bizErr.Error())
-    }
+if errors.As(err, &bizErr) {
+  return vo.NewNoDataCommonResponse(errcode.BIZ_ERR, bizErr.Error())
+}
 ```
 
 如果`errors.As()`函数返回了false, 则说明这层错链中没有`BizError`，即这应该是个系统级的错误，则可以返回一个笼统的系统错误之类的提示语。
