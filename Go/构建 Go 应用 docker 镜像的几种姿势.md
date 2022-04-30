@@ -14,7 +14,7 @@
 
 `hello.go` 代码如下：
 
-```
+```go
 package main
 
 func main() {
@@ -28,7 +28,7 @@ func main() {
 
 我在拜访了一些武林朋友之后，发现把整个过程丢到 `docker` 里面去编译一下就好了，一番琢磨之后，我得到了如下 `Dockerfile`:
 
-```
+```dockerfile
 FROM golang:alpine
 
 WORKDIR /build
@@ -42,13 +42,13 @@ CMD ["./hello"]
 
 构建镜像：
 
-```
+```shell
 $ docker build -t hello:v1 .
 ```
 
 搞定，让我们凑近了看看。
 
-```
+```shell
 $ docker run -it --rm hello:v1 ls -l /build
 total 1260
 -rwxr-xr-x    1 root     root       1281547 Mar  6 15:54 hello
@@ -59,7 +59,7 @@ total 1260
 
 我们再看看镜像到底有多大，据说大了拉取镜像就会比较慢呢
 
-```
+```shell
 $ docker images | grep hello
 hello   v1    2783ee221014   44 minutes ago   314MB
 ```
@@ -74,7 +74,7 @@ hello   v1    2783ee221014   44 minutes ago   314MB
 
 不管怎么说，我们先跑一下看看
 
-```
+```shell
 $ docker run -it --rm hello:v1
 hello world!
 ```
@@ -85,14 +85,14 @@ hello world!
 
 经过一番烟酒，加上朋友指点，发现原来我们用的那个基础镜像实在太大了。
 
-```
+```shell
 $ docker images | grep golang
 golang    alpine     d026981a7165   2 days ago          313MB
 ```
 
 并且朋友告诉我可以把代码先编译好，再拷贝进去，就不用那个巨大的基础镜像了，不过说起来容易，我还是好好花了点功夫的，最后 `Dockerfile` 长这样：
 
-```
+```dockerfile
 FROM alpine
 
 WORKDIR /build
@@ -104,7 +104,7 @@ CMD ["./hello"]
 
 跑一下试试
 
-```
+```shell
 $ docker build -t hello:v2 .
 ...
 => ERROR [3/3] COPY hello .                         0.0s
@@ -116,33 +116,33 @@ failed to compute cache key: "/hello" not found: not found
 
 不对，`hello` 找不到，忘记先编译一下 `hello.go` 了，再来~
 
-```
+```shell
 $ go build -o hello hello.go
 ```
 
 再跑 `docker build -t hello:v2 .`，没问题，走两步试试。。。
 
-```
+```shell
 $ docker run -it --rm hello:v2
 standard_init_linux.go:228: exec user process caused: exec format error
 ```
 
 失败！好吧，格式不对，原来我们开发机不是 `linux` 呀，再来~
 
-```
+```shell
 $ GOOS=linux go build -o hello hello.go
 ```
 
 重新 `docker build` 终于搞定了，赶紧跑下
 
-```
+```shell
 $ docker run -it --rm hello:v2
 hello world!
 ```
 
 没问题，我们来看看内容和大小。
 
-```
+```shell
 $ docker run -it --rm hello:v2 ls -l /build
 total 1252
 -rwxr-xr-x    1 root     root       1281587 Mar  6 16:18 hello
@@ -150,7 +150,7 @@ total 1252
 
 里面只有 `hello` 这个可执行文件，再也不用担心别人鄙视我的代码了~
 
-```
+```shell
 $ docker images | grep hello
 hello    v2   0dd53f016c93   53 seconds ago      6.61MB
 hello    v1   ac0e37173b85   25 minutes ago      314MB
@@ -277,7 +277,7 @@ CMD ["./hello"]
 
 我们看看用这个自动生成的 `Dockerfile` 构建出的镜像大小：
 
-```
+```shell
 $ docker images | grep hello
 hello     v4    a7c3baed2706   4 seconds ago   7.97MB
 hello     v3    f51e1116be11   8 hours ago     6.61MB
@@ -291,7 +291,7 @@ hello     v1    ac0e37173b85   9 hours ago     314MB
 
 我们看看镜像里有啥：
 
-```
+```shell
 $ docker run -it --rm hello:v4 ls -l /app
 total 832
 -rwxr-xr-x    1 root     root        851968 Mar  7 08:36 hello
@@ -299,7 +299,7 @@ total 832
 
 也是只有 `hello` 可执行文件，并且文件大小从原来的 1281KB 减到了 851KB。跑一下看看：
 
-```
+```shell
 $ docker run -it --rm hello:v4
 hello world!
 ```

@@ -176,11 +176,9 @@ $ git config --global user.email "email@example.com"
 
 注意`git config`命令的`--global`参数，用了这个参数，表示你这台机器上所有的 Git 仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和 Email 地址。
 
-
-
 ## Git 常用命令
 
-![Git 常用命令速查表](Git 版本控制实用指南.assets/011500266295799.jpg)
+![Git 常用命令速查表](Git%20%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%AE%9E%E7%94%A8%E6%8C%87%E5%8D%97.assets/011500266295799-1649233021177.jpg)
 
 Git 中 `HEAD` 的概念
 
