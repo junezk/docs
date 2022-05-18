@@ -257,7 +257,7 @@ app 目录下有 api、cmd、configs、internal 目录。一般还会放置 READ
 
 资源初始化和关闭步骤繁琐，比较容易出错。可利用依赖注入的思路，使用 [google/wire](https://github.com/google/wire) 管理资源依赖注入，方便测试和实现单次初始化与复用。
 
-```
+```go
 svr := http.NewServer()
 app := kratos.New()
 app.Append(kratos.Hook{
@@ -433,7 +433,7 @@ message DoubleValue {
 
 有时接口复用会带来歧义，比如一些字段给 A 方法用、另一些给 B 方法用；如果为不同方法定义 struct 又会造成冗余。
 
-```
+```go
 service LibraryService {
     rpc UpdateBook(UpdateBookRequest) returns (Book);
 }
@@ -470,7 +470,7 @@ message UpdateBookRequest {
 
 配置传参先参考 net/http 库：
 
-```
+```go
 func main() {
     s := &http.Server{
         Addr: ":8080",
@@ -491,7 +491,7 @@ func main() {
 - 自文档描述，代码可读、容易上手。
 - 代码直观，无歧义（比如空值）。
 
-```
+```go
 type Server struct {
     Addr     string        // required
     Port     int           // required
@@ -564,7 +564,7 @@ func TestFunctionalOptions(t *testing.T) {
 
 YAML：需要先转换成 JSON，再转成 Protobuf。Protobuf 的 Config 对象不能直接扩展方法，所以还需要加一个 Options 方法。
 
-```
+```go
 func ApplyYAML(s *redis.Config, yml string) error {
     js, err := yaml.YAMLToJSON([]byte(yml))
     if err != nil {
@@ -584,7 +584,7 @@ func Options(c *redis.Config) []redis.Options {
 
 Protobuf：使用 wrap struct 区分是否有值。
 
-```
+```go
 syntax = "proto3";
 import "google/protobuf/duration.proto";
 package config.redis.v1;
@@ -601,7 +601,7 @@ message redis {
 
 最终实现配置注入：
 
-```
+```go
 func main() {
     // load config file from yaml.
     c := new(redis.Config)
@@ -663,7 +663,7 @@ GOPATH
 
 使用 `go mod init` 命令初始化项目，生成 go.mod 文件：
 
-```
+```go
 go mod init example.com.hello
 cat go.mod
 module example.com/hello
@@ -707,7 +707,7 @@ Go 1.13 的 GOPROXY 默认为 [https://proxy.golang.org，在国内需要配置�
 - 防止内部开发人员配置不当造成 import path 泄露。
 - cache 热点依赖，降低公司公网出口带宽。
 
-```
+```bash
 export GOPROXY=https://goproxy.io,direct
 # 不走 proxy 的私有仓库或组，以逗号分隔。
 export GOPRIVATE=git.mycompany.com,github.com/my/private
@@ -717,7 +717,7 @@ export GOPRIVATE=git.mycompany.com,github.com/my/private
 
 用于控制 go 命令把某些仓库视作私有仓库，可以跳过 proxy server 和 checksum 检查，GOPRIVATE 的值同时作为 GONOPROXY 和 GONOSUMDB 默认值：
 
-```
+```bash
 # 以逗号分隔。
 export GOPRIVATE=*.corp.example.com,github.com/org_name
 ```
@@ -728,7 +728,7 @@ export GOPRIVATE=*.corp.example.com,github.com/org_name
 
 goproxy.io 是 Go Modules 开源代理，也可作为公司内部代理。
 
-```
+```bash
 # 下载编译：
 git clone https://github.com/goproxyio/goproxy.git
 cd goproxy
@@ -750,7 +750,7 @@ go build
 - goproxy server 配置 SSH Key，并且在仓库添加只读权限
 - goproxy server 配置 .gitconfig 把 ssh 替换成 http 方式访问
 
-```
+```ini
 [url "git@github.com:"]
     insteadOf = https://github.com/
 [url "git@github.com:"]
@@ -804,7 +804,7 @@ go build
 - 对于 service 的单元测试，使用 gomock 等库把 mock DAO 层。在设计包时，应该面向接口编程。
 - 在本地启动依赖 Docker 容器，在 CI 环境里执行单元测试，需要考虑物理机中的容器网络，或在容器里再次启动一个 Docker。
 
-```
+```go
 func TestMain(m *testing.M) {
     flag.Set("f", "./test/docker-compose.yaml")
     flag.Parse()
