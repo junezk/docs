@@ -300,8 +300,4 @@ $ docker run -it --rm hello:v4
 hello world!
 ```
 
-好了好了，不再纠缠 `Dockerfile` 了，我要去学习新技能了～
-
-## 项目地址
-
-https://github.com/zeromicro/go-zero
+好了好了，不再纠缠 `Dockerfile` 了，我要去学习新技能了～ß
